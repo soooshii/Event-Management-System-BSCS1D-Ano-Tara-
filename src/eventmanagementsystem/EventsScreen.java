@@ -199,36 +199,36 @@ public class EventsScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        int selectedEventId = 0;
         // 1. Check if an event was actually selected from the table
+        // We use the class-level selectedEventId tracker here!
         if (selectedEventId == 0) {
             JOptionPane.showMessageDialog(this, "Please click on an event in the table first to delete it.");
             return; // Stop the code
         }
 
         // 2. Ask for confirmation (Safety first!)
-        int confirm = JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to completely delete this event?",
-                "Confirm Delete",
+        int confirm = JOptionPane.showConfirmDialog(this, 
+                "Are you sure you want to completely delete this event?", 
+                "Confirm Delete", 
                 JOptionPane.YES_NO_OPTION);
 
-        // 3. If they click "Yes"
+        // 3. If they click "Yes", execute the SQL
         if (confirm == JOptionPane.YES_OPTION) {
             try {
                 Connection conn = (Connection) DatabaseConnection.getConnection();
-
+                
                 // The SQL command to delete based on the ID
                 String sql = "DELETE FROM events WHERE event_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, selectedEventId);
-
+                stmt.setInt(1, selectedEventId); // Uses your clicked ID!
+                
                 stmt.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Event Successfully Deleted!");
-
+                
                 // 4. Refresh the table and reset the tracker
                 loadEventsTable();
-                selectedEventId = 0; // Reset the ID so we don't accidentally delete the wrong thing later
-
+                selectedEventId = 0; // Safely reset it AFTER the delete is completely finished
+                
             } catch (HeadlessException | SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error deleting event: " + e.getMessage());
             }
