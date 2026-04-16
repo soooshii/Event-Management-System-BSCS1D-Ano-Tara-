@@ -71,6 +71,7 @@ public class DashboardScreen extends javax.swing.JFrame {
         lblFullEvents = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         btnManageEvents = new javax.swing.JButton();
+        btnManageRegistrations = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,20 +91,15 @@ public class DashboardScreen extends javax.swing.JFrame {
         btnManageEvents.setText("Manage Events");
         btnManageEvents.addActionListener(this::btnManageEventsActionPerformed);
 
+        btnManageRegistrations.setText("Manage Register");
+        btnManageRegistrations.addActionListener(this::btnManageRegistrationsActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblFullEvents, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                    .addComponent(lblTotalRegs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTotalEvents, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblUpcomingEvents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(212, 212, 212))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(128, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblWelcome)
@@ -111,10 +107,19 @@ public class DashboardScreen extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnLogout)
                         .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(btnManageEvents)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnManageEvents, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblFullEvents, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(lblTotalRegs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTotalEvents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblUpcomingEvents, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(4, 4, 4)
+                .addComponent(btnManageRegistrations)
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,9 +136,11 @@ public class DashboardScreen extends javax.swing.JFrame {
                 .addComponent(lblUpcomingEvents)
                 .addGap(18, 18, 18)
                 .addComponent(lblFullEvents)
-                .addGap(48, 48, 48)
-                .addComponent(btnManageEvents)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnManageEvents)
+                    .addComponent(btnManageRegistrations))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         pack();
@@ -165,6 +172,17 @@ if (confirm == JOptionPane.YES_OPTION) {
       this.dispose();
     }//GEN-LAST:event_btnManageEventsActionPerformed
 
+    private void btnManageRegistrationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageRegistrationsActionPerformed
+        // 1. Create a new instance of your Registration screen
+        RegistrationScreen regScreen = new RegistrationScreen();
+        
+        // 2. Make the new screen visible
+        regScreen.setVisible(true);
+        
+        // 3. Close the current Dashboard screen so it doesn't clutter the background
+        this.dispose();
+    }//GEN-LAST:event_btnManageRegistrationsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -192,6 +210,7 @@ if (confirm == JOptionPane.YES_OPTION) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnManageEvents;
+    private javax.swing.JButton btnManageRegistrations;
     private javax.swing.JLabel lblFullEvents;
     private javax.swing.JLabel lblTotalEvents;
     private javax.swing.JLabel lblTotalRegs;
