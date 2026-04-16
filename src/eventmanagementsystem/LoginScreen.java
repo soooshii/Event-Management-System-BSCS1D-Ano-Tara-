@@ -41,6 +41,7 @@ public class LoginScreen extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         btnRegister = new javax.swing.JToggleButton();
+        btnSignUp = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,12 +57,15 @@ public class LoginScreen extends javax.swing.JFrame {
 
         btnRegister.setText("Register");
 
+        btnSignUp.setText("Sign Up");
+        btnSignUp.addActionListener(this::btnSignUpActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblUsername)
                     .addComponent(lblPassword))
@@ -69,17 +73,19 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnLogin)
-                        .addGap(96, 96, 96)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSignUp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRegister))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtUsername)
                         .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(139, Short.MAX_VALUE)
+                .addContainerGap(84, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsername)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -90,60 +96,65 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
-                    .addComponent(btnRegister))
-                .addGap(27, 27, 27))
+                    .addComponent(btnRegister)
+                    .addComponent(btnSignUp))
+                .addGap(93, 93, 93))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-       // 1. Get the text the user typed in
-        String username = txtUsername.getText();
-        String password = new String(txtPassword.getPassword());
-
-        // 2. Validation: Check if fields are empty [cite: 1766]
-        if (username.trim().isEmpty() || password.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Both fields must not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
-            return; // Stop the code here
-        }
+     String user = txtUsername.getText().trim();
+        String pass = String.valueOf(txtPassword.getPassword()); 
 
         try {
-            // 4. Write the SQL Query using Prepared Statements (Security Requirement)
-            try ( // 3. Connect to the database
-                    Connection conn = DatabaseConnection.getConnection()) {
-                // 4. Write the SQL Query using Prepared Statements (Security Requirement)
-                String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setString(1, username);
-                stmt.setString(2, password);
-                // 5. Execute the query
-                ResultSet rs = stmt.executeQuery();
-                // 6. Check if a match was found in the database [cite: 1768]
-                if (rs.next()) {
-                    String fullName = rs.getString("full_name");
-    JOptionPane.showMessageDialog(this, "Login Successful! Welcome, " + fullName);
+            java.sql.Connection conn = DatabaseConnection.getConnection();
+            
+            String sql = "SELECT role FROM users WHERE username = ? AND password = ?";
+            java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, user);
+            stmt.setString(2, pass);
+            
+            java.sql.ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                String role = rs.getString("role");
+                
+                // --- THE TRAFFIC COP ---
+                if (role.equals("Admin")) {
                     
-    // Pass the fullName into the Dashboard so it knows who logged in!
-    DashboardScreen dash = new DashboardScreen(fullName);
-    dash.setVisible(true); 
-    this.dispose();
+                    DashboardScreen dash = new DashboardScreen(user); // <-- Change MainScreen to your actual admin file name
+                    dash.setVisible(true);
                     
-                } else {
-                    // No match found [cite: 1771]
-                    JOptionPane.showMessageDialog(this, "Invalid Username or Password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                } else if (role.equals("Attendee")) {
+                    
+                    // Here is our else if! Notice we are passing the (user) nametag right into the parentheses
+                    AttendeePortal portal = new AttendeePortal(user); 
+                    portal.setVisible(true);
+                    
                 }
-                // Always close your connection!
+                
+                this.dispose(); // Close the login screen
+                
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
             }
             
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
+       SignUpScreen signUp = new SignUpScreen();
+        signUp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSignUpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,6 +184,7 @@ public class LoginScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JToggleButton btnRegister;
+    private javax.swing.JToggleButton btnSignUp;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPasswordField txtPassword;
