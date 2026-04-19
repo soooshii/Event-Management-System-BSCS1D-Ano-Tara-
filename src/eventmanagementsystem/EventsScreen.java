@@ -354,7 +354,7 @@ public class EventsScreen extends javax.swing.JFrame {
                     rs.getInt("event_id"),
                     rs.getString("event_name"),
                     rs.getDate("event_date"),
-                    rs.getString("venue"), // <--- Our venue fix!
+                    rs.getString("venue"), 
                     rs.getInt("max_slots")
                 });
             }

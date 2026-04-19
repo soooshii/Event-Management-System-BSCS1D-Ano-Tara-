@@ -19,17 +19,16 @@ public class AttendeePortal extends javax.swing.JFrame {
             java.sql.Connection conn = DatabaseConnection.getConnection();
             
             // 2. Grab all the available events from the database
-            String sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events";
+            String sql = "SELECT event_id, event_name, max_slots FROM events";
             java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
             java.sql.ResultSet rs = stmt.executeQuery();
             
-            // 3. Fill the table with the real data
             while (rs.next()) {
                 model.addRow(new Object[]{
                     rs.getInt("event_id"),
                     rs.getString("event_name"),
-                    rs.getDate("event_date"), 
-                    rs.getString("location"),
+                    rs.getString("event_date"),
+                    rs.getString("venue"),
                     rs.getInt("max_slots")
                 });
             }
@@ -52,6 +51,8 @@ public class AttendeePortal extends javax.swing.JFrame {
         
         // 4. Update the UI to greet them personally
         lblWelcome.setText("Welcome to the Portal, " + loggedInUser + "!");
+        
+        loadAvailableEvents();
     }
 
     /**
@@ -67,6 +68,11 @@ public class AttendeePortal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEvents = new javax.swing.JTable();
         btnJoin = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        txtContact = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        lblEmail = new javax.swing.JLabel();
+        lblContact = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,55 +80,168 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         tblEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Event ID", "Event Name", "Event Date", "Location", "Max Slots"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblEvents);
+        if (tblEvents.getColumnModel().getColumnCount() > 0) {
+            tblEvents.getColumnModel().getColumn(0).setResizable(false);
+            tblEvents.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         btnJoin.setText("Join");
         btnJoin.addActionListener(this::btnJoinActionPerformed);
+
+        btnBack.setText("Back");
+
+        txtEmail.addActionListener(this::txtEmailActionPerformed);
+
+        lblEmail.setText("Email");
+
+        lblContact.setText("Contact");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(106, Short.MAX_VALUE)
+                .addGap(183, 183, 183)
+                .addComponent(lblWelcome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblWelcome)
-                        .addGap(230, 230, 230))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(82, 82, 82))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnJoin)
-                        .addGap(222, 222, 222))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtContact, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                .addComponent(txtEmail))
+                            .addComponent(lblEmail)
+                            .addComponent(lblContact)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(btnJoin)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addComponent(lblWelcome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnJoin)
-                .addGap(9, 9, 9))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblEmail)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(lblContact)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnJoin)
+                        .addGap(49, 49, 49))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblWelcome)
+                            .addComponent(btnBack))
+                        .addGap(11, 11, 11)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(48, 48, 48))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnJoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinActionPerformed
-        // TODO add your handling code here:
+       // 1. Did they click an event and fill out the boxes?
+        int selectedRow = tblEvents.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please click an event from the table first!");
+            return;
+        }
+        if (txtEmail.getText().trim().isEmpty() || txtContact.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please provide your Email and Contact Number!");
+            return;
+        }
+
+        int eventId = (int) tblEvents.getValueAt(selectedRow, 0);
+
+        try {
+            java.sql.Connection conn = DatabaseConnection.getConnection();
+
+            // 2. THE BOUNCER: Check if the event is already full
+            java.sql.PreparedStatement maxStmt = conn.prepareStatement("SELECT max_slots FROM events WHERE event_id = ?");
+            maxStmt.setInt(1, eventId);
+            java.sql.ResultSet maxRs = maxStmt.executeQuery();
+            int maxSlots = 0;
+            if (maxRs.next()) maxSlots = maxRs.getInt("max_slots");
+
+            java.sql.PreparedStatement countStmt = conn.prepareStatement("SELECT COUNT(*) AS total FROM registrations WHERE event_id = ?");
+            countStmt.setInt(1, eventId);
+            java.sql.ResultSet countRs = countStmt.executeQuery();
+            int currentRegs = 0;
+            if (countRs.next()) currentRegs = countRs.getInt("total");
+
+            if (currentRegs >= maxSlots) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Sorry! This event is completely full.");
+                return; // Stop them here!
+            }
+
+            // 3. MAGIC FETCH: Get their real First and Last name using their login nametag
+            String firstName = "";
+            String lastName = "";
+            java.sql.PreparedStatement nameStmt = conn.prepareStatement("SELECT first_name, last_name FROM users WHERE username = ?");
+            nameStmt.setString(1, loggedInUser); // We use the nametag they logged in with!
+            java.sql.ResultSet nameRs = nameStmt.executeQuery();
+            
+            if (nameRs.next()) {
+                firstName = nameRs.getString("first_name");
+                lastName = nameRs.getString("last_name");
+            }
+
+            // 4. OFFICIAL REGISTRATION: Save them to the event!
+            String sql = "INSERT INTO registrations (event_id, first_name, last_name, email, contact_number, attendance_status) VALUES (?, ?, ?, ?, ?, ?)";
+            java.sql.PreparedStatement insertStmt = conn.prepareStatement(sql);
+            insertStmt.setInt(1, eventId);
+            insertStmt.setString(2, firstName);
+            insertStmt.setString(3, lastName);
+            insertStmt.setString(4, txtEmail.getText().trim());
+            insertStmt.setString(5, txtContact.getText().trim());
+            insertStmt.setString(6, "Registered");
+
+            insertStmt.executeUpdate();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Success! You are registered for the event.");
+            
+            // Clear the boxes
+            txtEmail.setText("");
+            txtContact.setText("");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnJoinActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,9 +269,14 @@ public class AttendeePortal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnJoin;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblContact;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblWelcome;
     private javax.swing.JTable tblEvents;
+    private javax.swing.JTextField txtContact;
+    private javax.swing.JTextField txtEmail;
     // End of variables declaration//GEN-END:variables
 }

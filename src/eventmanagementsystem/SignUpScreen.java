@@ -56,6 +56,7 @@ public class SignUpScreen extends javax.swing.JFrame {
         txtPassword.setText("jPasswordField1");
 
         btnBackToLogin.setText("Back to Login");
+        btnBackToLogin.addActionListener(this::btnBackToLoginActionPerformed);
 
         btnCreateAccount.setText("Create Account");
         btnCreateAccount.addActionListener(this::btnCreateAccountActionPerformed);
@@ -164,9 +165,14 @@ public class SignUpScreen extends javax.swing.JFrame {
             this.dispose();
             
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: Username might already be taken.");
+            // This will now pop up the REAL reason it is failing!
+            javax.swing.JOptionPane.showMessageDialog(this, "Real Database Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnCreateAccountActionPerformed
+
+    private void btnBackToLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackToLoginActionPerformed
 
     /**
      * @param args the command line arguments
