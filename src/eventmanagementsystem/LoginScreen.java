@@ -50,7 +50,6 @@ public class LoginScreen extends javax.swing.JFrame {
 
         lblUsername.setText("Username:");
 
-        txtPassword.setText("jPasswordField1");
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
