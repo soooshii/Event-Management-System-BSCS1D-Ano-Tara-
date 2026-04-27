@@ -112,11 +112,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         tblEvents = new javax.swing.JTable();
         btnLogout = new javax.swing.JButton();
         lblWelcome = new javax.swing.JLabel();
-        lblContact = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
-        txtContact = new javax.swing.JTextField();
-        lblEmail = new javax.swing.JLabel();
-        btnJoin = new javax.swing.JButton();
         cmbFilter = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         txtDescription = new javax.swing.JTextField();
@@ -168,15 +163,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         lblWelcome.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
         lblWelcome.setText("Welcome User!");
 
-        lblContact.setText("Contact");
-
-        txtEmail.addActionListener(this::txtEmailActionPerformed);
-
-        lblEmail.setText("Email");
-
-        btnJoin.setText("Join");
-        btnJoin.addActionListener(this::btnJoinActionPerformed);
-
         cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Upcoming Events", "Ended Events", "Full Events", "My Registered Events", " " }));
         cmbFilter.addActionListener(this::cmbFilterActionPerformed);
 
@@ -185,59 +171,30 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(190, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lblWelcome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogout))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtContact)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblContact)
-                                            .addComponent(lblEmail))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(96, 96, 96)
-                                .addComponent(btnJoin)
-                                .addGap(0, 322, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(cmbFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap())
+                        .addGap(262, 262, 262)
+                        .addComponent(btnLogout)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(133, 133, 133))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogout)
                     .addComponent(lblWelcome))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(cmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblEmail)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblContact)
-                        .addGap(5, 5, 5)
-                        .addComponent(txtContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(btnJoin))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 54, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Discover Events", jPanel1);
@@ -249,17 +206,17 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         tblAttendees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Event ID", "Event Name", "Event Date", "Location", "Max Slots"
+                "Reg ID", "First Name", "Last Name", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -269,7 +226,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblAttendees);
         if (tblAttendees.getColumnModel().getColumnCount() > 0) {
             tblAttendees.getColumnModel().getColumn(0).setResizable(false);
-            tblAttendees.getColumnModel().getColumn(4).setResizable(false);
         }
 
         btnJoinEvent.setText("Join");
@@ -298,7 +254,7 @@ public class AttendeePortal extends javax.swing.JFrame {
                         .addComponent(btnCancel)))
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,7 +340,7 @@ public class AttendeePortal extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,7 +370,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 919, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,76 +381,6 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnJoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinActionPerformed
-
-        int selectedRow = tblEvents.getSelectedRow();
-        if (selectedRow == -1) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please click an event from the table first!");
-            return;
-        }
-        if (txtEmail.getText().trim().isEmpty() || txtContact.getText().trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please provide your Email and Contact Number!");
-            return;
-        }
-
-        int eventId = (int) tblEvents.getValueAt(selectedRow, 0);
-
-        try {
-            java.sql.Connection conn = DatabaseConnection.getConnection();
-
-            java.sql.PreparedStatement maxStmt = conn.prepareStatement("SELECT max_slots FROM events WHERE event_id = ?");
-            maxStmt.setInt(1, eventId);
-            java.sql.ResultSet maxRs = maxStmt.executeQuery();
-            int maxSlots = 0;
-            if (maxRs.next()) maxSlots = maxRs.getInt("max_slots");
-
-            java.sql.PreparedStatement countStmt = conn.prepareStatement("SELECT COUNT(*) AS total FROM registrations WHERE event_id = ?");
-            countStmt.setInt(1, eventId);
-            java.sql.ResultSet countRs = countStmt.executeQuery();
-            int currentRegs = 0;
-            if (countRs.next()) currentRegs = countRs.getInt("total");
-
-            if (currentRegs >= maxSlots) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Sorry! This event is completely full.");
-                return;
-            }
-
-            String firstName = "";
-            String lastName = "";
-            java.sql.PreparedStatement nameStmt = conn.prepareStatement("SELECT first_name, last_name FROM users WHERE username = ?");
-            nameStmt.setString(1, loggedInUser);
-            java.sql.ResultSet nameRs = nameStmt.executeQuery();
-
-            if (nameRs.next()) {
-                firstName = nameRs.getString("first_name");
-                lastName = nameRs.getString("last_name");
-            }
-
-            String sql = "INSERT INTO registrations (event_id, first_name, last_name, email, contact_number, attendance_status) VALUES (?, ?, ?, ?, ?, ?)";
-            java.sql.PreparedStatement insertStmt = conn.prepareStatement(sql);
-            insertStmt.setInt(1, eventId);
-            insertStmt.setString(2, firstName);
-            insertStmt.setString(3, lastName);
-            insertStmt.setString(4, txtEmail.getText().trim());
-            insertStmt.setString(5, txtContact.getText().trim());
-            insertStmt.setString(6, "Registered");
-
-            insertStmt.executeUpdate();
-
-            javax.swing.JOptionPane.showMessageDialog(this, "Success! You are registered for the event.");
-
-            txtEmail.setText("");
-            txtContact.setText("");
-
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
-        }
-    }//GEN-LAST:event_btnJoinActionPerformed
-
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-
-    }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         int confirm = JOptionPane.showConfirmDialog(this,
@@ -952,7 +838,6 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete1;
     private javax.swing.JButton btnDelete2;
-    private javax.swing.JButton btnJoin;
     private javax.swing.JButton btnJoinEvent;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnUpdate;
@@ -966,15 +851,11 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel lblContact;
-    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblWelcome;
     private javax.swing.JTable tblAttendees;
     private javax.swing.JTable tblEvents;
     private javax.swing.JTable tblHostedEvents;
-    private javax.swing.JTextField txtContact;
     private javax.swing.JTextField txtDescription;
-    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNewDescription;
     // End of variables declaration//GEN-END:variables
 }
