@@ -135,9 +135,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 
                 // --- THE TRAFFIC COP ---
                 if (role.equals("Admin")) {
-                    
-                    DashboardScreen dash = new DashboardScreen(user); // <-- Change MainScreen to your actual admin file name
-                    dash.setVisible(true);
+
                     
                 } else if (role.equals("Attendee")) {
                     
@@ -147,7 +145,8 @@ public class LoginScreen extends javax.swing.JFrame {
                     
                 }
                 
-                this.dispose(); // Close the login screen
+                this.dispose(); // Close the login screenthis.dispose(); // Close the login screen
+                new AttendeePortal(user).setVisible(true);
                 
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
