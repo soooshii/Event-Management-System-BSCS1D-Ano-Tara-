@@ -40,7 +40,6 @@ public class LoginScreen extends javax.swing.JFrame {
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
-        btnRegister = new javax.swing.JToggleButton();
         btnSignUp = new javax.swing.JToggleButton();
         chkPassword = new javax.swing.JCheckBox();
 
@@ -59,8 +58,6 @@ public class LoginScreen extends javax.swing.JFrame {
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-
-        btnRegister.setText("Register");
 
         btnSignUp.setText("Sign Up");
         btnSignUp.addActionListener(this::btnSignUpActionPerformed);
@@ -83,10 +80,9 @@ public class LoginScreen extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnLogin)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGap(18, 18, 18)
                             .addComponent(btnSignUp)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnRegister))
+                            .addGap(40, 40, 40))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtUsername)
                             .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))))
@@ -108,7 +104,6 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
-                    .addComponent(btnRegister)
                     .addComponent(btnSignUp))
                 .addGap(87, 87, 87))
         );
@@ -145,8 +140,7 @@ public class LoginScreen extends javax.swing.JFrame {
                     
                 }
                 
-                this.dispose(); // Close the login screenthis.dispose(); // Close the login screen
-                new AttendeePortal(user).setVisible(true);
+                this.dispose(); 
                 
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
@@ -208,7 +202,6 @@ public class LoginScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
-    private javax.swing.JToggleButton btnRegister;
     private javax.swing.JToggleButton btnSignUp;
     private javax.swing.JCheckBox chkPassword;
     private javax.swing.JLabel lblPassword;

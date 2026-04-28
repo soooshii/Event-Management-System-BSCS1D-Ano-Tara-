@@ -4,6 +4,8 @@
  */
 package eventmanagementsystem;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Weather Report
@@ -39,6 +41,7 @@ public class SignUpScreen extends javax.swing.JFrame {
         lblUsername = new javax.swing.JLabel();
         lblLastName = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
+        chkPassword = new javax.swing.JCheckBox();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -53,8 +56,6 @@ public class SignUpScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtPassword.setText("jPasswordField1");
-
         btnBackToLogin.setText("Back to Login");
         btnBackToLogin.addActionListener(this::btnBackToLoginActionPerformed);
 
@@ -68,6 +69,9 @@ public class SignUpScreen extends javax.swing.JFrame {
         lblLastName.setText("Last Name");
 
         lblPassword.setText("Password");
+
+        chkPassword.setText("Show Password");
+        chkPassword.addActionListener(this::chkPasswordActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,12 +99,14 @@ public class SignUpScreen extends javax.swing.JFrame {
                             .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPassword)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnBackToLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addComponent(chkPassword)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtPassword)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnBackToLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(0, 0, Short.MAX_VALUE))))))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -122,7 +128,9 @@ public class SignUpScreen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                .addGap(5, 5, 5)
+                .addComponent(chkPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateAccount)
                     .addComponent(btnBackToLogin))
@@ -171,8 +179,31 @@ public class SignUpScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateAccountActionPerformed
 
     private void btnBackToLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToLoginActionPerformed
-        // TODO add your handling code here:
+         int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to logout?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION);
+
+        // 2. If the user clicks "Yes"
+        if (confirm == JOptionPane.YES_OPTION) {
+            // Create a new instance of the Login Screen
+            LoginScreen login = new LoginScreen();
+
+            // Make the Login Screen visible
+            login.setVisible(true);
+
+            // Close (dispose) the current Dashboard Screen
+            this.dispose();
+        }
     }//GEN-LAST:event_btnBackToLoginActionPerformed
+
+    private void chkPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPasswordActionPerformed
+        if (chkPassword.isSelected()) {
+            txtPassword.setEchoChar((char) 0); // Shows the real letters
+        } else {
+            txtPassword.setEchoChar('*'); // Hides them again (or use • if you prefer!)
+        }
+    }//GEN-LAST:event_chkPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,6 +233,7 @@ public class SignUpScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBackToLogin;
     private javax.swing.JButton btnCreateAccount;
+    private javax.swing.JCheckBox chkPassword;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel lblFirstName;
     private javax.swing.JLabel lblLastName;
