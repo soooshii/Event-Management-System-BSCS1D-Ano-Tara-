@@ -23,8 +23,41 @@ public class LoginScreen extends javax.swing.JFrame {
      * Creates new form LoginScreen
      */
     public LoginScreen() {
-        initComponents();
-    }
+       initComponents();
+        
+        javax.swing.border.Border raisedBorder = new javax.swing.border.SoftBevelBorder(
+        javax.swing.border.BevelBorder.RAISED, 
+        java.awt.Color.WHITE, java.awt.Color.WHITE, 
+        java.awt.Color.BLACK, java.awt.Color.BLACK
+    );
+
+    // 2. LOGIN BUTTON EFFECT
+    btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+            btnLogin.setBorder(javax.swing.BorderFactory.createSoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        }
+        @Override
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
+            btnLogin.setBorder(raisedBorder);
+        }
+    });
+
+    // 3. SIGN UP BUTTON EFFECT
+    btnSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+            btnSignUp.setBorder(javax.swing.BorderFactory.createSoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        }
+        @Override
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
+            btnSignUp.setBorder(raisedBorder);
+        }
+    });
+}
+     
+        
+       
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,17 +83,27 @@ public class LoginScreen extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(147, 71, 144));
 
-        btnLogin.setBackground(new java.awt.Color(255, 0, 102));
-        btnLogin.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setBackground(new java.awt.Color(192, 192, 192));
+        btnLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnLogin.setText("Login");
-        btnLogin.setBorderPainted(false);
+        btnLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
+        btnLogin.setContentAreaFilled(false);
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnLogin.setFocusPainted(false);
+        btnLogin.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        btnLogin.setOpaque(true);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
 
-        btnSignUp.setBackground(new java.awt.Color(147, 71, 144));
-        btnSignUp.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnSignUp.setBackground(new java.awt.Color(192, 192, 192));
+        btnSignUp.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnSignUp.setText("Sign Up");
-        btnSignUp.setBorderPainted(false);
+        btnSignUp.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
+        btnSignUp.setContentAreaFilled(false);
+        btnSignUp.setFocusPainted(false);
+        btnSignUp.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        btnSignUp.setMaximumSize(new java.awt.Dimension(47, 24));
+        btnSignUp.setMinimumSize(new java.awt.Dimension(47, 24));
+        btnSignUp.setOpaque(true);
         btnSignUp.setPreferredSize(new java.awt.Dimension(72, 33));
         btnSignUp.addActionListener(this::btnSignUpActionPerformed);
 
@@ -78,9 +121,9 @@ public class LoginScreen extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(160, 160, 160)
+                .addGap(193, 193, 193)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -134,7 +177,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(chkPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,6 +243,7 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
+
         SignUpScreen signUp = new SignUpScreen();
         signUp.setVisible(true);
         this.dispose();
@@ -230,7 +274,7 @@ public class LoginScreen extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Window".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
