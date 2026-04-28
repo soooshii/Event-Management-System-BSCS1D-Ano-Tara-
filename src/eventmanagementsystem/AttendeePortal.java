@@ -128,7 +128,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         tblHostedEvents = new javax.swing.JTable();
         txtNewDescription = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        btnDelete2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -313,9 +312,6 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         jLabel1.setText("Description");
 
-        btnDelete2.setText("Delete");
-        btnDelete2.addActionListener(this::btnDelete2ActionPerformed);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -333,13 +329,12 @@ public class AttendeePortal extends javax.swing.JFrame {
                             .addComponent(txtNewDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(56, 56, 56)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnAddEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnAddEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -353,13 +348,11 @@ public class AttendeePortal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddEvent)
                     .addComponent(btnUpdate))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete1)
-                    .addComponent(btnDelete2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDelete1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -793,7 +786,94 @@ public class AttendeePortal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDelete1ActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-     
+     // 1. Check if they actually clicked a row
+        int selectedRow = tblHostedEvents.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select an event from the table first!");
+            return;
+        }
+
+        try {
+            // 2. Grab the current data from the table (Assuming Event ID is Column 0)
+            int eventId = Integer.parseInt(tblHostedEvents.getValueAt(selectedRow, 0).toString());
+            String currentName = tblHostedEvents.getValueAt(selectedRow, 1).toString();
+            String currentDate = tblHostedEvents.getValueAt(selectedRow, 2).toString();
+            String currentLocation = tblHostedEvents.getValueAt(selectedRow, 3).toString();
+            String currentSlots = tblHostedEvents.getValueAt(selectedRow, 4).toString();
+
+            // Split the YYYY-MM-DD date back into 3 pieces for your specific UI
+            String[] dateParts = currentDate.split("-");
+            String yyyy = (dateParts.length == 3) ? dateParts[0] : "";
+            String mm = (dateParts.length == 3) ? dateParts[1] : "";
+            String dd = (dateParts.length == 3) ? dateParts[2] : "";
+
+            // 3. Get the current description directly from the database
+            String currentDesc = "";
+            java.sql.Connection conn = DatabaseConnection.getConnection();
+            String descSql = "SELECT description FROM events WHERE event_id = ?";
+            java.sql.PreparedStatement descStmt = conn.prepareStatement(descSql);
+            descStmt.setInt(1, eventId);
+            java.sql.ResultSet rs = descStmt.executeQuery();
+            if (rs.next()) {
+                currentDesc = rs.getString("description");
+            }
+
+            // 4. Create the text fields, but PRE-FILL them with the current data
+            javax.swing.JTextField txtName = new javax.swing.JTextField(currentName);
+            javax.swing.JTextField txtYear = new javax.swing.JTextField(yyyy, 4);
+            javax.swing.JTextField txtMonth = new javax.swing.JTextField(mm, 2);
+            javax.swing.JTextField txtDay = new javax.swing.JTextField(dd, 2);
+            
+            javax.swing.JPanel datePanel = new javax.swing.JPanel();
+            datePanel.add(txtYear); datePanel.add(new javax.swing.JLabel("-"));
+            datePanel.add(txtMonth); datePanel.add(new javax.swing.JLabel("-"));
+            datePanel.add(txtDay);
+            
+            javax.swing.JTextField txtLoc = new javax.swing.JTextField(currentLocation);
+            javax.swing.JTextField txtSlots = new javax.swing.JTextField(currentSlots);
+
+            javax.swing.JTextArea txtDesc = new javax.swing.JTextArea(currentDesc, 3, 20);
+            txtDesc.setLineWrap(true); txtDesc.setWrapStyleWord(true);
+            javax.swing.JScrollPane descScroll = new javax.swing.JScrollPane(txtDesc);
+
+            // 5. Bundle it all together
+            Object[] formFields = {
+                "Event Name:", txtName,
+                "Event Date (YYYY-MM-DD):", datePanel,
+                "Location:", txtLoc,
+                "Max Slots:", txtSlots,
+                "Event Description:", descScroll
+            };
+
+            // 6. Trigger the pop-up window
+            int result = javax.swing.JOptionPane.showConfirmDialog(this, formFields, "Update Event Details", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE);
+
+            // 7. If the user clicks "OK", update the database
+            if (result == javax.swing.JOptionPane.OK_OPTION) {
+                
+                String updateSql = "UPDATE events SET event_name = ?, event_date = ?, location = ?, max_slots = ?, description = ? WHERE event_id = ?";
+                java.sql.PreparedStatement updateStmt = conn.prepareStatement(updateSql);
+
+                updateStmt.setString(1, txtName.getText());
+                String formattedDate = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
+                updateStmt.setString(2, formattedDate);
+                updateStmt.setString(3, txtLoc.getText());
+                updateStmt.setInt(4, Integer.parseInt(txtSlots.getText()));
+                updateStmt.setString(5, txtDesc.getText());
+                updateStmt.setInt(6, eventId); // Uses the hidden ID to safely update the exact right row!
+
+                updateStmt.executeUpdate();
+                javax.swing.JOptionPane.showMessageDialog(this, "Event Successfully Updated!");
+
+                // 8. INSTANT REFRESH
+                loadHostedEvents();
+                loadComboBoxEvents();
+                cmbFilterActionPerformed(null);
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error updating event: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void tblHostedEventsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHostedEventsMouseClicked
@@ -804,10 +884,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         // 2. Grab the hidden Event ID from the very first column (Column 0)
        
     }//GEN-LAST:event_tblHostedEventsMouseClicked
-
-    private void btnDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDelete2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -837,7 +913,6 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JButton btnAddEvent;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete1;
-    private javax.swing.JButton btnDelete2;
     private javax.swing.JButton btnJoinEvent;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnUpdate;
