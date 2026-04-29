@@ -24,6 +24,9 @@ public class LoginScreen extends javax.swing.JFrame {
      */
     public LoginScreen() {
        initComponents();
+       
+       java.awt.Color pressedColor = new java.awt.Color(153, 153, 153);
+       java.awt.Color originalColor = new java.awt.Color(192, 192, 192);
         
         javax.swing.border.Border raisedBorder = new javax.swing.border.SoftBevelBorder(
         javax.swing.border.BevelBorder.RAISED, 
@@ -36,10 +39,12 @@ public class LoginScreen extends javax.swing.JFrame {
         @Override
         public void mousePressed(java.awt.event.MouseEvent evt) {
             btnLogin.setBorder(javax.swing.BorderFactory.createSoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+            btnLogin.setBackground(pressedColor);
         }
         @Override
         public void mouseReleased(java.awt.event.MouseEvent evt) {
             btnLogin.setBorder(raisedBorder);
+            btnLogin.setBackground(originalColor);
         }
     });
 
@@ -48,10 +53,12 @@ public class LoginScreen extends javax.swing.JFrame {
         @Override
         public void mousePressed(java.awt.event.MouseEvent evt) {
             btnSignUp.setBorder(javax.swing.BorderFactory.createSoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+            btnSignUp.setBackground(pressedColor);
         }
         @Override
         public void mouseReleased(java.awt.event.MouseEvent evt) {
             btnSignUp.setBorder(raisedBorder);
+            btnSignUp.setBackground(originalColor);
         }
     });
 }
@@ -86,7 +93,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnLogin.setBackground(new java.awt.Color(192, 192, 192));
         btnLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnLogin.setText("Login");
-        btnLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
+        btnLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         btnLogin.setContentAreaFilled(false);
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLogin.setFocusPainted(false);
@@ -97,7 +104,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnSignUp.setBackground(new java.awt.Color(192, 192, 192));
         btnSignUp.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnSignUp.setText("Sign Up");
-        btnSignUp.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
+        btnSignUp.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         btnSignUp.setContentAreaFilled(false);
         btnSignUp.setFocusPainted(false);
         btnSignUp.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -148,6 +155,7 @@ public class LoginScreen extends javax.swing.JFrame {
         chkPassword.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         chkPassword.setForeground(new java.awt.Color(255, 255, 255));
         chkPassword.setText("Show Password");
+        chkPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         chkPassword.addActionListener(this::chkPasswordActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
