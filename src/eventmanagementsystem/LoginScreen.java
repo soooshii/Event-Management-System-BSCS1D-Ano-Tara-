@@ -28,7 +28,7 @@ public class LoginScreen extends javax.swing.JFrame {
        java.awt.Color pressedColor = new java.awt.Color(153, 153, 153);
        java.awt.Color originalColor = new java.awt.Color(192, 192, 192);
         
-        javax.swing.border.Border raisedBorder = new javax.swing.border.SoftBevelBorder(
+        javax.swing.border.Border raisedBorder = new javax.swing.border.BevelBorder(
         javax.swing.border.BevelBorder.RAISED, 
         java.awt.Color.WHITE, java.awt.Color.WHITE, 
         java.awt.Color.BLACK, java.awt.Color.BLACK
@@ -38,7 +38,7 @@ public class LoginScreen extends javax.swing.JFrame {
     btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mousePressed(java.awt.event.MouseEvent evt) {
-            btnLogin.setBorder(javax.swing.BorderFactory.createSoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+            btnLogin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
             btnLogin.setBackground(pressedColor);
         }
         @Override
@@ -52,7 +52,7 @@ public class LoginScreen extends javax.swing.JFrame {
     btnSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mousePressed(java.awt.event.MouseEvent evt) {
-            btnSignUp.setBorder(javax.swing.BorderFactory.createSoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+            btnSignUp.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
             btnSignUp.setBackground(pressedColor);
         }
         @Override
@@ -128,7 +128,7 @@ public class LoginScreen extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(193, 193, 193)
+                .addGap(215, 215, 215)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,10 +137,14 @@ public class LoginScreen extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(106, 0, 102));
 
-        lblUsername.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        txtUsername.addActionListener(this::txtUsernameActionPerformed);
+
+        lblUsername.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setText("Username:");
 
+        txtPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -148,7 +152,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
 
-        lblPassword.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        lblPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Password: ");
 
@@ -163,29 +167,29 @@ public class LoginScreen extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(198, Short.MAX_VALUE)
+                .addContainerGap(284, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPassword)
+                    .addComponent(chkPassword)
                     .addComponent(lblUsername)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chkPassword))
-                .addGap(313, 313, 313))
+                    .addComponent(lblPassword)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(213, 213, 213))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addGap(174, 174, 174)
                 .addComponent(lblUsername)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
+                .addGap(18, 18, 18)
                 .addComponent(lblPassword)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chkPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -270,6 +274,10 @@ public class LoginScreen extends javax.swing.JFrame {
             txtPassword.setEchoChar('*'); // Hides them again (or use • if you prefer!)
         }
     }//GEN-LAST:event_chkPasswordActionPerformed
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     /**
      * @param args the command line arguments
