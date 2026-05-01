@@ -35,7 +35,7 @@ public class SplashScreen extends javax.swing.JFrame {
         btnStart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(18, 4, 88));
+        setBackground(new java.awt.Color(147, 71, 144));
         setUndecorated(true);
 
         btnStart.setBackground(new java.awt.Color(255, 0, 128));
@@ -54,18 +54,18 @@ public class SplashScreen extends javax.swing.JFrame {
                         .addGap(189, 189, 189)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
+                        .addGap(112, 112, 112)
                         .addComponent(btnStart)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGap(128, 128, 128)
                 .addComponent(btnStart)
-                .addGap(46, 46, 46))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         pack();
