@@ -113,6 +113,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnLogout = new javax.swing.JButton();
         lblWelcome = new javax.swing.JLabel();
         cmbFilter = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         txtDescription = new javax.swing.JTextField();
         cmbEventSelect = new javax.swing.JComboBox<>();
@@ -120,6 +121,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         tblAttendees = new javax.swing.JTable();
         btnJoinEvent = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnAddEvent = new javax.swing.JButton();
         btnDelete1 = new javax.swing.JButton();
@@ -127,14 +129,20 @@ public class AttendeePortal extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblHostedEvents = new javax.swing.JTable();
         txtNewDescription = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        txtdescrip = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1001, 657));
 
-        jTabbedPane1.setBackground(new java.awt.Color(232, 212, 183));
+        jTabbedPane1.setBackground(new java.awt.Color(106, 0, 102));
+        jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(1001, 657));
 
         jPanel1.setBackground(new java.awt.Color(232, 212, 183));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1001, 600));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -168,59 +176,36 @@ public class AttendeePortal extends javax.swing.JFrame {
             tblEvents.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 605, 380));
+
         btnLogout.setText("Logout");
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
+        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, -1, -1));
 
         lblWelcome.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
         lblWelcome.setForeground(new java.awt.Color(255, 255, 255));
         lblWelcome.setText("Welcome User!");
+        jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 260, 60));
 
         cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Upcoming Events", "Ended Events", "Full Events", "My Registered Events", " " }));
         cmbFilter.addActionListener(this::cmbFilterActionPerformed);
+        jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 605, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(175, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblWelcome)
-                        .addGap(238, 238, 238)
-                        .addComponent(btnLogout)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(133, 133, 133))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnLogout)
-                        .addGap(41, 41, 41))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblWelcome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eventmanagementsystem/bg homescreen .png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Discover Events", jPanel1);
 
         jPanel3.setBackground(new java.awt.Color(232, 212, 183));
+        jPanel3.setPreferredSize(new java.awt.Dimension(1001, 600));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtDescription.setEditable(false);
+        jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 429, 205));
 
         cmbEventSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbEventSelect.addActionListener(this::cmbEventSelectActionPerformed);
+        jPanel3.add(cmbEventSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 240, -1));
 
         tblAttendees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,64 +238,35 @@ public class AttendeePortal extends javax.swing.JFrame {
             tblAttendees.getColumnModel().getColumn(0).setResizable(false);
         }
 
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 390, 330));
+
         btnJoinEvent.setText("Join");
         btnJoinEvent.addActionListener(this::btnJoinEventActionPerformed);
+        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, -1, -1));
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(this::btnCancelActionPerformed);
+        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, -1, -1));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(98, 98, 98)
-                                .addComponent(cmbEventSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(btnJoinEvent)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancel)))
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(cmbEventSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnJoinEvent)
-                    .addComponent(btnCancel))
-                .addGap(55, 55, 55))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eventmanagementsystem/bg homescreen .png"))); // NOI18N
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Events Information", jPanel3);
 
         jPanel2.setBackground(new java.awt.Color(232, 212, 183));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAddEvent.setText("Create Event");
         btnAddEvent.addActionListener(this::btnAddEventActionPerformed);
+        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(554, 316, 121, -1));
 
         btnDelete1.setText("Delete");
         btnDelete1.addActionListener(this::btnDelete1ActionPerformed);
+        jPanel2.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(621, 351, 121, -1));
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(this::btnUpdateActionPerformed);
+        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(704, 316, 121, -1));
 
         tblHostedEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -345,52 +301,15 @@ public class AttendeePortal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tblHostedEvents);
 
-        jLabel1.setText("Description");
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 435, 355));
+        jPanel2.add(txtNewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 87, 381, 211));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNewDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addComponent(btnAddEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(txtNewDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddEvent)
-                    .addComponent(btnUpdate))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDelete1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
-        );
+        txtdescrip.setForeground(new java.awt.Color(255, 255, 255));
+        txtdescrip.setText("Description");
+        jPanel2.add(txtdescrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 79, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eventmanagementsystem/bg homescreen .png"))); // NOI18N
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Host Event", jPanel2);
 
@@ -400,12 +319,12 @@ public class AttendeePortal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -954,7 +873,9 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cmbEventSelect;
     private javax.swing.JComboBox<String> cmbFilter;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -968,5 +889,6 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JTable tblHostedEvents;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtNewDescription;
+    private javax.swing.JLabel txtdescrip;
     // End of variables declaration//GEN-END:variables
 }
