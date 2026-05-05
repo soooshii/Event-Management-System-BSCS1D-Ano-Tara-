@@ -28,12 +28,13 @@ public class AttendeePortal extends javax.swing.JFrame {
         
         tblEvents.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
         tblAttendees.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
+        tblHostedEvents.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
     }
     
     private void loadComboBoxEvents() {
         try {
-            cmbEvents.removeAllItems(); // Clear default items
-            cmbEvents.addItem("Select an Event..."); // Placeholder
+            cmbEvents.removeAllItems(); 
+            cmbEvents.addItem("Select an Event..."); 
             
             java.sql.Connection conn = DatabaseConnection.getConnection();
             String sql = "SELECT event_name FROM events";
@@ -50,21 +51,18 @@ public class AttendeePortal extends javax.swing.JFrame {
     
     private void loadHostedEvents() {
         try {
-            // 1. Get the table model and wipe it clean
+            
             javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblHostedEvents.getModel();
             model.setRowCount(0); 
 
-            // 2. Connect to the database
             java.sql.Connection conn = DatabaseConnection.getConnection();
             
-            // 3. The SQL Query: Only select events where the host is the logged-in user
             String sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events WHERE host_username = ?";
             java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, loggedInUser); // This guarantees they only see THEIR events!
+            stmt.setString(1, loggedInUser); 
             
             java.sql.ResultSet rs = stmt.executeQuery();
 
-            // 4. Loop through the results and add them to the table
             while (rs.next()) {
                 model.addRow(new Object[]{
                     rs.getInt("event_id"),
@@ -451,11 +449,9 @@ public class AttendeePortal extends javax.swing.JFrame {
                 }
             }
 
-            // --- TASK 2: LOAD THE ATTENDEE ROSTER ---
             javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblAttendees.getModel();
-            model.setRowCount(0); // Wipe the old roster clean
+            model.setRowCount(0);
 
-            // We use a JOIN statement to find registrations linked to this specific event name
             String rosterSql = "SELECT r.registration_id, r.first_name, r.last_name, r.attendance_status " +
                                "FROM registrations r JOIN events e ON r.event_id = e.event_id " +
                                "WHERE e.event_name = ?";
@@ -484,13 +480,12 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         try {
             javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblEvents.getModel();
-            model.setRowCount(0); // Wipe the table clean for the new filtered data
+            model.setRowCount(0);
 
             java.sql.Connection conn = DatabaseConnection.getConnection();
             String sql = "";
             java.sql.PreparedStatement stmt = null;
 
-            // We need to grab their real name just in case they select "My Registered Events"
             String firstName = "";
             String lastName = "";
             if (filter.equals("My Registered Events")) {
@@ -503,25 +498,24 @@ public class AttendeePortal extends javax.swing.JFrame {
                 }
             }
 
-            // --- THE SQL SWITCHBOARD ---
             if (filter.equals("Upcoming Events")) {
-                // Only show events where the date is today or in the future
+               
                 sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events WHERE event_date >= CURRENT_DATE";
                 stmt = conn.prepareStatement(sql);
             } 
             else if (filter.equals("Ended Events")) {
-                // The Archive: Only show events where the date is strictly in the past
+              
                 sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events WHERE event_date < CURRENT_DATE";
                 stmt = conn.prepareStatement(sql);
             } 
             else if (filter.equals("Full Events")) {
-                // Uses an SQL subquery to count attendees and see if it equals or exceeds max_slots
+             
                 sql = "SELECT e.event_id, e.event_name, e.event_date, e.location, e.max_slots FROM events e " +
                       "WHERE e.max_slots <= (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id)";
                 stmt = conn.prepareStatement(sql);
             } 
             else if (filter.equals("My Registered Events")) {
-                // Uses a JOIN to find events specifically tied to this user's name
+         
                 sql = "SELECT e.event_id, e.event_name, e.event_date, e.location, e.max_slots " +
                       "FROM events e JOIN registrations r ON e.event_id = r.event_id " +
                       "WHERE r.first_name = ? AND r.last_name = ?";
@@ -530,20 +524,19 @@ public class AttendeePortal extends javax.swing.JFrame {
                 stmt.setString(2, lastName);
             } 
             else {
-                // Fallback: Show everything just in case
+              
                 sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events";
                 stmt = conn.prepareStatement(sql);
             }
 
-            // Execute whichever query was chosen above
             java.sql.ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 model.addRow(new Object[]{
                     rs.getInt("event_id"),
                     rs.getString("event_name"),
-                    rs.getString("event_date"), // Make sure this matches your DB spelling!
-                    rs.getString("location"),   // Make sure this matches your DB spelling!
+                    rs.getString("event_date"), 
+                    rs.getString("location"),  
                     rs.getInt("max_slots")
                 });
             }
@@ -564,7 +557,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         try {
             java.sql.Connection conn = DatabaseConnection.getConnection();
 
-            // --- 1. GET THE USER'S REAL NAME ---
             String firstName = "";
             String lastName = "";
             java.sql.PreparedStatement userStmt = conn.prepareStatement("SELECT first_name, last_name FROM users WHERE username = ?");
@@ -575,7 +567,6 @@ public class AttendeePortal extends javax.swing.JFrame {
                 lastName = userRs.getString("last_name");
             }
 
-            // --- 2. GET THE EVENT ID ---
             int eventId = -1;
             java.sql.PreparedStatement eventStmt = conn.prepareStatement("SELECT event_id FROM events WHERE event_name = ?");
             eventStmt.setString(1, selectedEvent);
@@ -584,7 +575,6 @@ public class AttendeePortal extends javax.swing.JFrame {
                 eventId = eventRs.getInt("event_id");
             }
 
-            // --- 3. THE ANTI-SPAM CHECK (No duplicates allowed) ---
             String checkSql = "SELECT * FROM registrations WHERE event_id = ? AND first_name = ? AND last_name = ?";
             java.sql.PreparedStatement checkStmt = conn.prepareStatement(checkSql);
             checkStmt.setInt(1, eventId);
@@ -592,17 +582,15 @@ public class AttendeePortal extends javax.swing.JFrame {
             checkStmt.setString(3, lastName);
             if (checkStmt.executeQuery().next()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "You are already registered for this event!");
-                return; // Stop them here!
+                return; 
             }
 
-            // --- 4. THE CLEAN POP-UP INPUTS ---
             String email = javax.swing.JOptionPane.showInputDialog(this, "Enter your Email Address to register:");
-            if (email == null || email.trim().isEmpty()) return; // If they click Cancel, stop the process
+            if (email == null || email.trim().isEmpty()) return;
 
             String contact = javax.swing.JOptionPane.showInputDialog(this, "Enter your Contact Number:");
-            if (contact == null || contact.trim().isEmpty()) return; // If they click Cancel, stop the process
+            if (contact == null || contact.trim().isEmpty()) return; 
 
-            // --- 5. EXECUTE THE REGISTRATION ---
             String insertSql = "INSERT INTO registrations (event_id, first_name, last_name, email, contact_number, attendance_status) VALUES (?, ?, ?, ?, ?, 'Confirmed')";
             java.sql.PreparedStatement insertStmt = conn.prepareStatement(insertSql);
             insertStmt.setInt(1, eventId);
@@ -614,8 +602,6 @@ public class AttendeePortal extends javax.swing.JFrame {
 
             javax.swing.JOptionPane.showMessageDialog(this, "Successfully joined the event!");
 
-            // --- 6. INSTANT UI REFRESH ---
-            // We call the dropdown action method again to magically refresh the roster table!
             cmbEventsActionPerformed(null); 
 
         } catch (Exception e) {
@@ -624,30 +610,26 @@ public class AttendeePortal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnJoinEventActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-// 1. THIS IS THE LINE THAT WENT MISSING! It grabs the text from the dropdown.
-    // (Note: Make sure 'cmbEvents' matches your actual dropdown variable name!)
+
     String selectedEvent = cmbEvents.getSelectedItem().toString();
 
-    // 2. Stop them if they haven't picked an event yet
     if (selectedEvent.equals("Select an Event...") || selectedEvent.trim().isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Please select an event first.", "No Event Selected", javax.swing.JOptionPane.WARNING_MESSAGE);
         return; 
     }
 
-    // 3. The Safety Net: Ask for confirmation
     int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
             "Are you sure you want to cancel your registration for this event?", 
             "Confirm Cancellation", 
             javax.swing.JOptionPane.YES_NO_OPTION,
             javax.swing.JOptionPane.WARNING_MESSAGE);
 
-    // 4. If they clicked "Yes", talk to the database with our new Subquery SQL!
     if (confirm == javax.swing.JOptionPane.YES_OPTION) {
         try {
             java.sql.Connection conn = DatabaseConnection.getConnection();
 
             if (conn != null) {
-                // This SQL precisely matches the Event ID, First Name, and Last Name
+              
                 String sql = "DELETE FROM registrations " +
                              "WHERE event_id = (SELECT event_id FROM events WHERE event_name = ?) " +
                              "AND first_name = (SELECT first_name FROM users WHERE username = ?) " +
@@ -655,13 +637,10 @@ public class AttendeePortal extends javax.swing.JFrame {
                 
                 java.sql.PreparedStatement pst = conn.prepareStatement(sql);
                 
-                // 1. Pass the event name from the dropdown (Java now knows what this is!)
                 pst.setString(1, selectedEvent); 
                 
-                // 2. Pass the logged in username to find their first name
                 pst.setString(2, this.loggedInUser); 
 
-                // 3. Pass the logged in username again to find their last name
                 pst.setString(3, this.loggedInUser); 
 
                 int rowsDeleted = pst.executeUpdate();
@@ -683,13 +662,12 @@ public class AttendeePortal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnAddEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEventActionPerformed
-      // 1. Create the text fields for the pop-up
+   
         javax.swing.JTextField txtName = new javax.swing.JTextField();
         javax.swing.JTextField txtYear = new javax.swing.JTextField("2026", 4);
         javax.swing.JTextField txtMonth = new javax.swing.JTextField(2);
         javax.swing.JTextField txtDay = new javax.swing.JTextField(2);
         
-        // Group them side-by-side
         javax.swing.JPanel datePanel = new javax.swing.JPanel();
         datePanel.add(txtYear);
         datePanel.add(new javax.swing.JLabel("-"));
@@ -700,38 +678,31 @@ public class AttendeePortal extends javax.swing.JFrame {
         javax.swing.JTextField txtLoc = new javax.swing.JTextField();
         javax.swing.JTextField txtSlots = new javax.swing.JTextField();
 
-        // --- NEW: THE DESCRIPTION BOX ---
         javax.swing.JTextArea txtDesc = new javax.swing.JTextArea(3, 20); // 3 rows tall
         txtDesc.setLineWrap(true);
         txtDesc.setWrapStyleWord(true);
         javax.swing.JScrollPane descScroll = new javax.swing.JScrollPane(txtDesc);
 
-        // 2. Bundle the labels and fields together
         Object[] formFields = {
             "Event Name:", txtName,
             "Event Date (YYYY-MM-DD):", datePanel,
             "Location/Venue:", txtLoc,
             "Max Slots:", txtSlots,
-            "Event Description:", descScroll // Added the new box to your pop-up!
+            "Event Description:", descScroll
         };
 
-        // 3. Trigger the pop-up window
         int result = javax.swing.JOptionPane.showConfirmDialog(this, formFields, "Add New Event", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE);
 
-        // 4. If the user clicks "OK"
         if (result == javax.swing.JOptionPane.OK_OPTION) {
 
-            // Validation
             if (txtName.getText().trim().isEmpty() || txtYear.getText().trim().isEmpty() || txtMonth.getText().trim().isEmpty() || txtDay.getText().trim().isEmpty() || txtLoc.getText().trim().isEmpty() || txtSlots.getText().trim().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "All fields are required!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
                 return; 
             }
 
-            // Save to Database
             try {
                 java.sql.Connection conn = DatabaseConnection.getConnection();
                 
-                // --- UPGRADED SQL: Added host_username and description ---
                 String sql = "INSERT INTO events (event_name, event_date, location, max_slots, host_username, description) VALUES (?, ?, ?, ?, ?, ?)";
                 java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -741,15 +712,12 @@ public class AttendeePortal extends javax.swing.JFrame {
                 stmt.setString(3, txtLoc.getText());
                 stmt.setInt(4, Integer.parseInt(txtSlots.getText()));
                 
-                // --- THE NEW DATA ---
                 stmt.setString(5, loggedInUser); // This seamlessly attaches the host!
                 stmt.setString(6, txtDesc.getText());
 
                 stmt.executeUpdate();
                 javax.swing.JOptionPane.showMessageDialog(this, "Event Successfully Added!");
 
-                // --- INSTANT REFRESH ---
-                // Replaces your old loadEventsTable() with the new unified architecture refreshers
                 loadComboBoxEvents();
                 cmbFilterActionPerformed(null);
                 loadHostedEvents();
@@ -768,11 +736,10 @@ public class AttendeePortal extends javax.swing.JFrame {
             return;
         }
 
-        // 2. Grab the Event Name from the clicked row (Assuming Event Name is in Column 1)
         String selectedEvent = tblHostedEvents.getValueAt(selectedRow, 1).toString();
 
         try {
-            // 3. THE SAFETY POP-UP
+           
             int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
                     "Are you sure you want to permanently delete '" + selectedEvent + "'? This will also cancel all registrations.", 
                     "Confirm Deletion", 
@@ -781,7 +748,6 @@ public class AttendeePortal extends javax.swing.JFrame {
             if (confirm == javax.swing.JOptionPane.YES_OPTION) {
                 java.sql.Connection conn = DatabaseConnection.getConnection();
                 
-                // 4. THE SAFE DELETION (Registrations first, then the Event)
                 String delRegSql = "DELETE FROM registrations WHERE event_id = (SELECT event_id FROM events WHERE event_name = ?)";
                 java.sql.PreparedStatement delRegStmt = conn.prepareStatement(delRegSql);
                 delRegStmt.setString(1, selectedEvent);
@@ -794,10 +760,9 @@ public class AttendeePortal extends javax.swing.JFrame {
 
                 javax.swing.JOptionPane.showMessageDialog(this, "Event deleted successfully!");
 
-                // 5. INSTANT REFRESH FOR ALL TABS
-                loadHostedEvents(); // Refresh Tab 3
-                loadComboBoxEvents(); // Refresh Tab 2's dropdown
-                cmbFilterActionPerformed(null); // Refresh Tab 1's main table
+                loadHostedEvents();
+                loadComboBoxEvents(); 
+                cmbFilterActionPerformed(null);
             }
 
         } catch (Exception e) {
