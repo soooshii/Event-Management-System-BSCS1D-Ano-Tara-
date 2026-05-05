@@ -26,8 +26,8 @@ public class AttendeePortal extends javax.swing.JFrame {
     
     private void loadComboBoxEvents() {
         try {
-            cmbEventSelect.removeAllItems(); // Clear default items
-            cmbEventSelect.addItem("Select an Event..."); // Placeholder
+            cmbEvents.removeAllItems(); // Clear default items
+            cmbEvents.addItem("Select an Event..."); // Placeholder
             
             java.sql.Connection conn = DatabaseConnection.getConnection();
             String sql = "SELECT event_name FROM events";
@@ -35,7 +35,7 @@ public class AttendeePortal extends javax.swing.JFrame {
             java.sql.ResultSet rs = stmt.executeQuery();
             
             while (rs.next()) {
-                cmbEventSelect.addItem(rs.getString("event_name"));
+                cmbEvents.addItem(rs.getString("event_name"));
             }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Combo Box Error: " + e.getMessage());
@@ -116,7 +116,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         txtDescription = new javax.swing.JTextField();
-        cmbEventSelect = new javax.swing.JComboBox<>();
+        cmbEvents = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblAttendees = new javax.swing.JTable();
         btnJoinEvent = new javax.swing.JButton();
@@ -133,11 +133,14 @@ public class AttendeePortal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Events Management System");
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1001, 657));
+        setResizable(false);
 
         jTabbedPane1.setBackground(new java.awt.Color(106, 0, 102));
         jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTabbedPane1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1001, 657));
 
@@ -146,7 +149,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblEvents.setBackground(new java.awt.Color(102, 0, 102));
-        tblEvents.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        tblEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         tblEvents.setForeground(new java.awt.Color(255, 255, 255));
         tblEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -190,6 +193,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnLogout.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnLogout.setForeground(new java.awt.Color(255, 255, 255));
         btnLogout.setText("Logout");
+        btnLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
         jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, -1, -1));
 
@@ -199,9 +203,10 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 260, 60));
 
         cmbFilter.setBackground(new java.awt.Color(102, 0, 153));
-        cmbFilter.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        cmbFilter.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         cmbFilter.setForeground(new java.awt.Color(255, 255, 255));
         cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Upcoming Events", "Ended Events", "Full Events", "My Registered Events", " " }));
+        cmbFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbFilter.addActionListener(this::cmbFilterActionPerformed);
         jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 605, -1));
 
@@ -216,19 +221,19 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         txtDescription.setEditable(false);
         txtDescription.setBackground(new java.awt.Color(102, 0, 102));
-        txtDescription.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        txtDescription.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtDescription.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 429, 205));
 
-        cmbEventSelect.setBackground(new java.awt.Color(102, 0, 153));
-        cmbEventSelect.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
-        cmbEventSelect.setForeground(new java.awt.Color(255, 255, 255));
-        cmbEventSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbEventSelect.addActionListener(this::cmbEventSelectActionPerformed);
-        jPanel3.add(cmbEventSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 240, -1));
+        cmbEvents.setBackground(new java.awt.Color(102, 0, 153));
+        cmbEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        cmbEvents.setForeground(new java.awt.Color(255, 255, 255));
+        cmbEvents.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEvents.addActionListener(this::cmbEventsActionPerformed);
+        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 240, -1));
 
         tblAttendees.setBackground(new java.awt.Color(102, 0, 102));
-        tblAttendees.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        tblAttendees.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         tblAttendees.setForeground(new java.awt.Color(255, 255, 255));
         tblAttendees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -272,14 +277,14 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnJoinEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnJoinEvent.setText("Join");
         btnJoinEvent.addActionListener(this::btnJoinEventActionPerformed);
-        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, -1, -1));
+        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, 80, -1));
 
         btnCancel.setBackground(new java.awt.Color(147, 71, 144));
         btnCancel.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(this::btnCancelActionPerformed);
-        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, -1, -1));
+        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
@@ -293,6 +298,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnAddEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnAddEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnAddEvent.setText("Create Event");
+        btnAddEvent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddEvent.addActionListener(this::btnAddEventActionPerformed);
         jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 150, -1));
 
@@ -300,6 +306,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnDelete1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnDelete1.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete1.setText("Delete");
+        btnDelete1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDelete1.addActionListener(this::btnDelete1ActionPerformed);
         jPanel2.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 120, -1));
 
@@ -307,10 +314,12 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnUpdate.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdate.setText("Update");
+        btnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUpdate.addActionListener(this::btnUpdateActionPerformed);
         jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, 120, -1));
 
         tblHostedEvents.setBackground(new java.awt.Color(102, 0, 102));
+        tblHostedEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         tblHostedEvents.setForeground(new java.awt.Color(255, 255, 255));
         tblHostedEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -400,9 +409,9 @@ public class AttendeePortal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void cmbEventSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEventSelectActionPerformed
+    private void cmbEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEventsActionPerformed
 // 1. Grab the name they just clicked
-        String selectedEvent = (String) cmbEventSelect.getSelectedItem();
+        String selectedEvent = (String) cmbEvents.getSelectedItem();
 
         // Safety check: Did they click the placeholder or empty space?
         if (selectedEvent == null || selectedEvent.equals("Select an Event...")) {
@@ -455,7 +464,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error loading event details: " + e.getMessage());
         }      
-    }//GEN-LAST:event_cmbEventSelectActionPerformed
+    }//GEN-LAST:event_cmbEventsActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
         String filter = (String) cmbFilter.getSelectedItem();
@@ -533,7 +542,7 @@ public class AttendeePortal extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbFilterActionPerformed
 
     private void btnJoinEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinEventActionPerformed
-       String selectedEvent = (String) cmbEventSelect.getSelectedItem();
+       String selectedEvent = (String) cmbEvents.getSelectedItem();
         
         if (selectedEvent == null || selectedEvent.equals("Select an Event...")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select an event from the dropdown first!");
@@ -595,7 +604,7 @@ public class AttendeePortal extends javax.swing.JFrame {
 
             // --- 6. INSTANT UI REFRESH ---
             // We call the dropdown action method again to magically refresh the roster table!
-            cmbEventSelectActionPerformed(null); 
+            cmbEventsActionPerformed(null); 
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Registration Error: " + e.getMessage());
@@ -603,69 +612,62 @@ public class AttendeePortal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnJoinEventActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-      // 1. Create the text fields for the pop-up
-        javax.swing.JTextField txtName = new javax.swing.JTextField();
-        // Create 3 smaller text boxes (the number inside sets the visual width)
-        javax.swing.JTextField txtYear = new javax.swing.JTextField("2026", 4); // Pre-filled with 2026!
-        javax.swing.JTextField txtMonth = new javax.swing.JTextField(2);
-        javax.swing.JTextField txtDay = new javax.swing.JTextField(2);
-        
-        // Group them side-by-side in a mini panel with dashes in between
-        javax.swing.JPanel datePanel = new javax.swing.JPanel();
-        datePanel.add(txtYear);
-        datePanel.add(new javax.swing.JLabel("-"));
-        datePanel.add(txtMonth);
-        datePanel.add(new javax.swing.JLabel("-"));
-        datePanel.add(txtDay);
-        javax.swing.JTextField txtLoc = new javax.swing.JTextField();
-        javax.swing.JTextField txtSlots = new javax.swing.JTextField();
+// 1. THIS IS THE LINE THAT WENT MISSING! It grabs the text from the dropdown.
+    // (Note: Make sure 'cmbEvents' matches your actual dropdown variable name!)
+    String selectedEvent = cmbEvents.getSelectedItem().toString();
 
-        // 2. Bundle the labels and fields together into an array
-        Object[] formFields = {
-            "Event Name:", txtName,
-            "Event Date (YYYY-MM-DD):", datePanel, // <-- We put the whole panel here!
-            "Location:", txtLoc,
-            "Max Slots:", txtSlots
-        };
+    // 2. Stop them if they haven't picked an event yet
+    if (selectedEvent.equals("Select an Event...") || selectedEvent.trim().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select an event first.", "No Event Selected", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return; 
+    }
 
-        // 3. Trigger the pop-up window
-        int result = JOptionPane.showConfirmDialog(this, formFields, "Add New Event", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+    // 3. The Safety Net: Ask for confirmation
+    int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Are you sure you want to cancel your registration for this event?", 
+            "Confirm Cancellation", 
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE);
 
-        // 4. If the user clicks "OK" on the pop-up
-        if (result == JOptionPane.OK_OPTION) {
+    // 4. If they clicked "Yes", talk to the database with our new Subquery SQL!
+    if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+        try {
+            java.sql.Connection conn = DatabaseConnection.getConnection();
 
-            // Validation: Make sure they didn't leave anything blank
-            if (txtName.getText().trim().isEmpty() || txtYear.getText().trim().isEmpty() || txtMonth.getText().trim().isEmpty() || txtDay.getText().trim().isEmpty() || txtLoc.getText().trim().isEmpty() || txtSlots.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
-                return; // Stop the code
-            }
+            if (conn != null) {
+                // This SQL precisely matches the Event ID, First Name, and Last Name
+                String sql = "DELETE FROM registrations " +
+                             "WHERE event_id = (SELECT event_id FROM events WHERE event_name = ?) " +
+                             "AND first_name = (SELECT first_name FROM users WHERE username = ?) " +
+                             "AND last_name = (SELECT last_name FROM users WHERE username = ?)";
+                
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                
+                // 1. Pass the event name from the dropdown (Java now knows what this is!)
+                pst.setString(1, selectedEvent); 
+                
+                // 2. Pass the logged in username to find their first name
+                pst.setString(2, this.loggedInUser); 
 
-            // Save to Database
-            try {
-                try (java.sql.Connection conn = DatabaseConnection.getConnection()) {
-                    String sql = "INSERT INTO events (event_name, event_date, location, max_slots) VALUES (?, ?, ?, ?)";
-                    PreparedStatement stmt = conn.prepareStatement(sql);
+                // 3. Pass the logged in username again to find their last name
+                pst.setString(3, this.loggedInUser); 
 
-                    stmt.setString(1, txtName.getText());
-                    
-        String formattedDate = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
-        stmt.setString(2, formattedDate);
-                    stmt.setString(3, txtLoc.getText());
-                    stmt.setInt(4, Integer.parseInt(txtSlots.getText())); // Converts the slot text to an integer
+                int rowsDeleted = pst.executeUpdate();
 
-                    stmt.executeUpdate();
-                    JOptionPane.showMessageDialog(this, "Event Successfully Added!");
+                if (rowsDeleted > 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Registration cancelled successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "You are not currently registered for this event.", "Notice", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
 
-                // Refresh the table instantly to show the new event
-               
-
-            } catch (HeadlessException | NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Error adding event: " + e.getMessage());
-            } catch (SQLException ex) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage());
+                pst.close();
+                conn.close();
             }
+        } catch (java.sql.SQLException sqlErr) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Database Error while cancelling.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            sqlErr.printStackTrace();
         }
+    }
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnAddEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEventActionPerformed
@@ -922,7 +924,7 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JButton btnJoinEvent;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cmbEventSelect;
+    private javax.swing.JComboBox<String> cmbEvents;
     private javax.swing.JComboBox<String> cmbFilter;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

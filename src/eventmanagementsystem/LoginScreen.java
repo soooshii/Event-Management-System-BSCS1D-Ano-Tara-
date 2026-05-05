@@ -110,6 +110,7 @@ public class LoginScreen extends javax.swing.JFrame {
         lblsignupbg2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Events Management System");
         setPreferredSize(new java.awt.Dimension(1001, 657));
         setResizable(false);
 
@@ -136,6 +137,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnSignUp.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnSignUp.setText("Sign Up");
         btnSignUp.setContentAreaFilled(false);
+        btnSignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSignUp.setFocusPainted(false);
         btnSignUp.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnSignUp.setMaximumSize(new java.awt.Dimension(47, 24));
@@ -143,7 +145,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnSignUp.setOpaque(true);
         btnSignUp.setPreferredSize(new java.awt.Dimension(72, 33));
         btnSignUp.addActionListener(this::btnSignUpActionPerformed);
-        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(286, 423, 140, -1));
+        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, 140, -1));
 
         txtUsername.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
@@ -166,12 +168,12 @@ public class LoginScreen extends javax.swing.JFrame {
         btnLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnLogin.setText("Login");
         btnLogin.setContentAreaFilled(false);
-        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.setFocusPainted(false);
         btnLogin.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnLogin.setOpaque(true);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(541, 423, 140, 33));
+        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 140, 33));
 
         lblloginbg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Untitled design (1).png"))); // NOI18N
         pnlLogin.add(lblloginbg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 660));
@@ -188,6 +190,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnCreateAccount.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnCreateAccount.setText("Create Account");
         btnCreateAccount.setContentAreaFilled(false);
+        btnCreateAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCreateAccount.setFocusPainted(false);
         btnCreateAccount.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnCreateAccount.setMaximumSize(new java.awt.Dimension(47, 24));
@@ -201,7 +204,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnBackToLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnBackToLogin.setText("Back to Login");
         btnBackToLogin.setContentAreaFilled(false);
-        btnBackToLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnBackToLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBackToLogin.setFocusPainted(false);
         btnBackToLogin.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnBackToLogin.setOpaque(true);
@@ -238,6 +241,7 @@ public class LoginScreen extends javax.swing.JFrame {
         pnlSignup.add(lblUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 199, 100, -1));
 
         lblsignupbg2.setIcon(lblloginbg1.getIcon());
+        lblsignupbg2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlSignup.add(lblsignupbg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 660));
 
         jPanel2.add(pnlSignup, "SIGNUP");
