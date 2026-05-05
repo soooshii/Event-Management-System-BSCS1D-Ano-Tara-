@@ -157,14 +157,14 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="300" y="420" width="140" height="-1"/>
+                  <AbsoluteConstraints x="310" y="350" width="140" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JTextField" name="txtUsername">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="MS Reference Sans Serif" size="12" style="1"/>
+                  <Font name="Monospaced" size="12" style="1"/>
                 </Property>
               </Properties>
               <Events>
@@ -192,7 +192,7 @@
             <Component class="javax.swing.JPasswordField" name="txtPassword">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="MS Reference Sans Serif" size="12" style="1"/>
+                  <Font name="Monospaced" size="12" style="1"/>
                 </Property>
               </Properties>
               <Events>
@@ -239,14 +239,15 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="470" y="420" width="140" height="33"/>
+                  <AbsoluteConstraints x="470" y="350" width="140" height="33"/>
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JLabel" name="lblloginbg1">
               <Properties>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Images/Untitled design (1).png"/>
+                  <Image iconType="3" name="/Images/StockCake-Magical_Unicorn_Valley-3724818-standard.jpg"/>
                 </Property>
               </Properties>
               <Constraints>

@@ -22,6 +22,12 @@ public class AttendeePortal extends javax.swing.JFrame {
         loadAvailableEvents();
         loadComboBoxEvents();
         loadHostedEvents();
+        
+        jScrollPane1.getViewport().setBackground(tblEvents.getBackground());
+        jScrollPane2.getViewport().setBackground(tblAttendees.getBackground());
+        
+        tblEvents.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
+        tblAttendees.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
     }
     
     private void loadComboBoxEvents() {
@@ -142,11 +148,14 @@ public class AttendeePortal extends javax.swing.JFrame {
         jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTabbedPane1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        jTabbedPane1.setOpaque(true);
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1001, 657));
 
         jPanel1.setBackground(new java.awt.Color(232, 212, 183));
         jPanel1.setPreferredSize(new java.awt.Dimension(1001, 600));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane1.setOpaque(false);
 
         tblEvents.setBackground(new java.awt.Color(102, 0, 102));
         tblEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
@@ -178,6 +187,7 @@ public class AttendeePortal extends javax.swing.JFrame {
             }
         });
         tblEvents.setFillsViewportHeight(true);
+        tblEvents.setOpaque(false);
         tblEvents.setSelectionBackground(new java.awt.Color(102, 0, 153));
         tblEvents.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tblEvents.setShowGrid(true);
@@ -211,6 +221,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 605, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Discover Events", jPanel1);
@@ -223,14 +234,16 @@ public class AttendeePortal extends javax.swing.JFrame {
         txtDescription.setBackground(new java.awt.Color(102, 0, 102));
         txtDescription.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtDescription.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 429, 205));
+        jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 429, 300));
 
         cmbEvents.setBackground(new java.awt.Color(102, 0, 153));
         cmbEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         cmbEvents.setForeground(new java.awt.Color(255, 255, 255));
         cmbEvents.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbEvents.addActionListener(this::cmbEventsActionPerformed);
-        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 240, -1));
+        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 240, -1));
+
+        jScrollPane2.setOpaque(false);
 
         tblAttendees.setBackground(new java.awt.Color(102, 0, 102));
         tblAttendees.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
@@ -263,28 +276,26 @@ public class AttendeePortal extends javax.swing.JFrame {
         });
         tblAttendees.setFillsViewportHeight(true);
         tblAttendees.setShowGrid(true);
-        tblAttendees.setShowHorizontalLines(true);
-        tblAttendees.setShowVerticalLines(true);
         jScrollPane2.setViewportView(tblAttendees);
         if (tblAttendees.getColumnModel().getColumnCount() > 0) {
             tblAttendees.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 390, 330));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 440, 460));
 
         btnJoinEvent.setBackground(new java.awt.Color(147, 71, 144));
         btnJoinEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnJoinEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnJoinEvent.setText("Join");
         btnJoinEvent.addActionListener(this::btnJoinEventActionPerformed);
-        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, 80, -1));
+        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 510, 80, -1));
 
         btnCancel.setBackground(new java.awt.Color(147, 71, 144));
         btnCancel.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(this::btnCancelActionPerformed);
-        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, -1, -1));
+        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
@@ -358,6 +369,7 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 435, 355));
 
+        txtNewDescription.setEditable(false);
         txtNewDescription.setBackground(new java.awt.Color(102, 0, 102));
         txtNewDescription.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
         txtNewDescription.setForeground(new java.awt.Color(255, 255, 255));

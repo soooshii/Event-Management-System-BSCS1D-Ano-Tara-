@@ -33,7 +33,8 @@ public class SplashScreen extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         btnStart = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblSplashGIF = new javax.swing.JLabel();
+        lblSplashBG = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(147, 71, 144));
@@ -44,7 +45,7 @@ public class SplashScreen extends javax.swing.JFrame {
 
         btnStart.setBackground(new java.awt.Color(204, 0, 204));
         btnStart.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
-        btnStart.setForeground(new java.awt.Color(255, 255, 255));
+        btnStart.setForeground(new java.awt.Color(255, 255, 204));
         btnStart.setText("[ Press Start ]");
         btnStart.setBorderPainted(false);
         btnStart.setContentAreaFilled(false);
@@ -54,10 +55,15 @@ public class SplashScreen extends javax.swing.JFrame {
             }
         });
         btnStart.addActionListener(this::btnStartActionPerformed);
-        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, -1, 40));
+        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, -1, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Splash Screen.png"))); // NOI18N
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 510, 330));
+        lblSplashGIF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSplashGIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/yuumi.gif"))); // NOI18N
+        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 310, 240));
+
+        lblSplashBG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSplashBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/b3880201-magical-library-with-floating-books-in-whimsical-pixel-art-thumbnail.jpg"))); // NOI18N
+        jPanel3.add(lblSplashBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -130, 520, 520));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -103,7 +109,8 @@ public class SplashScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStart;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblSplashBG;
+    private javax.swing.JLabel lblSplashGIF;
     // End of variables declaration//GEN-END:variables
 }

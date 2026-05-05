@@ -145,9 +145,9 @@ public class LoginScreen extends javax.swing.JFrame {
         btnSignUp.setOpaque(true);
         btnSignUp.setPreferredSize(new java.awt.Dimension(72, 33));
         btnSignUp.addActionListener(this::btnSignUpActionPerformed);
-        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, 140, -1));
+        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, 140, -1));
 
-        txtUsername.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
         pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 201, 308, -1));
 
@@ -155,7 +155,7 @@ public class LoginScreen extends javax.swing.JFrame {
         lblPassword.setText("Password ");
         pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 241, -1, -1));
 
-        txtPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -173,9 +173,10 @@ public class LoginScreen extends javax.swing.JFrame {
         btnLogin.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnLogin.setOpaque(true);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 140, 33));
+        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 140, 33));
 
-        lblloginbg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Untitled design (1).png"))); // NOI18N
+        lblloginbg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblloginbg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/StockCake-Magical_Unicorn_Valley-3724818-standard.jpg"))); // NOI18N
         pnlLogin.add(lblloginbg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 660));
 
         jPanel2.add(pnlLogin, "LOGIN");
