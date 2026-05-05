@@ -138,12 +138,16 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(106, 0, 102));
         jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1001, 657));
 
         jPanel1.setBackground(new java.awt.Color(232, 212, 183));
         jPanel1.setPreferredSize(new java.awt.Dimension(1001, 600));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tblEvents.setBackground(new java.awt.Color(102, 0, 102));
+        tblEvents.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        tblEvents.setForeground(new java.awt.Color(255, 255, 255));
         tblEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -170,6 +174,10 @@ public class AttendeePortal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblEvents.setFillsViewportHeight(true);
+        tblEvents.setSelectionBackground(new java.awt.Color(102, 0, 153));
+        tblEvents.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tblEvents.setShowGrid(true);
         jScrollPane1.setViewportView(tblEvents);
         if (tblEvents.getColumnModel().getColumnCount() > 0) {
             tblEvents.getColumnModel().getColumn(0).setResizable(false);
@@ -178,6 +186,9 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 605, 380));
 
+        btnLogout.setBackground(new java.awt.Color(147, 71, 144));
+        btnLogout.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
         btnLogout.setText("Logout");
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
         jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, -1, -1));
@@ -187,11 +198,14 @@ public class AttendeePortal extends javax.swing.JFrame {
         lblWelcome.setText("Welcome User!");
         jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 260, 60));
 
+        cmbFilter.setBackground(new java.awt.Color(102, 0, 153));
+        cmbFilter.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        cmbFilter.setForeground(new java.awt.Color(255, 255, 255));
         cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Upcoming Events", "Ended Events", "Full Events", "My Registered Events", " " }));
         cmbFilter.addActionListener(this::cmbFilterActionPerformed);
         jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 605, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eventmanagementsystem/bg homescreen .png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Discover Events", jPanel1);
@@ -201,12 +215,21 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtDescription.setEditable(false);
+        txtDescription.setBackground(new java.awt.Color(102, 0, 102));
+        txtDescription.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        txtDescription.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 429, 205));
 
+        cmbEventSelect.setBackground(new java.awt.Color(102, 0, 153));
+        cmbEventSelect.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        cmbEventSelect.setForeground(new java.awt.Color(255, 255, 255));
         cmbEventSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbEventSelect.addActionListener(this::cmbEventSelectActionPerformed);
         jPanel3.add(cmbEventSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 240, -1));
 
+        tblAttendees.setBackground(new java.awt.Color(102, 0, 102));
+        tblAttendees.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        tblAttendees.setForeground(new java.awt.Color(255, 255, 255));
         tblAttendees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -233,6 +256,10 @@ public class AttendeePortal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblAttendees.setFillsViewportHeight(true);
+        tblAttendees.setShowGrid(true);
+        tblAttendees.setShowHorizontalLines(true);
+        tblAttendees.setShowVerticalLines(true);
         jScrollPane2.setViewportView(tblAttendees);
         if (tblAttendees.getColumnModel().getColumnCount() > 0) {
             tblAttendees.getColumnModel().getColumn(0).setResizable(false);
@@ -240,15 +267,21 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 390, 330));
 
+        btnJoinEvent.setBackground(new java.awt.Color(147, 71, 144));
+        btnJoinEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnJoinEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnJoinEvent.setText("Join");
         btnJoinEvent.addActionListener(this::btnJoinEventActionPerformed);
         jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, -1, -1));
 
+        btnCancel.setBackground(new java.awt.Color(147, 71, 144));
+        btnCancel.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(this::btnCancelActionPerformed);
         jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eventmanagementsystem/bg homescreen .png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Events Information", jPanel3);
@@ -256,18 +289,29 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(232, 212, 183));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnAddEvent.setBackground(new java.awt.Color(147, 71, 144));
+        btnAddEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnAddEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnAddEvent.setText("Create Event");
         btnAddEvent.addActionListener(this::btnAddEventActionPerformed);
-        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(554, 316, 121, -1));
+        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 150, -1));
 
+        btnDelete1.setBackground(new java.awt.Color(147, 71, 144));
+        btnDelete1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnDelete1.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete1.setText("Delete");
         btnDelete1.addActionListener(this::btnDelete1ActionPerformed);
-        jPanel2.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(621, 351, 121, -1));
+        jPanel2.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 120, -1));
 
+        btnUpdate.setBackground(new java.awt.Color(147, 71, 144));
+        btnUpdate.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(this::btnUpdateActionPerformed);
-        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(704, 316, 121, -1));
+        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, 120, -1));
 
+        tblHostedEvents.setBackground(new java.awt.Color(102, 0, 102));
+        tblHostedEvents.setForeground(new java.awt.Color(255, 255, 255));
         tblHostedEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -294,6 +338,8 @@ public class AttendeePortal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblHostedEvents.setFillsViewportHeight(true);
+        tblHostedEvents.setShowGrid(true);
         tblHostedEvents.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblHostedEventsMouseClicked(evt);
@@ -302,13 +348,18 @@ public class AttendeePortal extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tblHostedEvents);
 
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 435, 355));
+
+        txtNewDescription.setBackground(new java.awt.Color(102, 0, 102));
+        txtNewDescription.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        txtNewDescription.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.add(txtNewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 87, 381, 211));
 
+        txtdescrip.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         txtdescrip.setForeground(new java.awt.Color(255, 255, 255));
         txtdescrip.setText("Description");
-        jPanel2.add(txtdescrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 79, -1));
+        jPanel2.add(txtdescrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, 100, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eventmanagementsystem/bg homescreen .png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Host Event", jPanel2);

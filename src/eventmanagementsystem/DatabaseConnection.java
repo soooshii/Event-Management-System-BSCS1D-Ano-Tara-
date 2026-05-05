@@ -10,16 +10,15 @@ public class DatabaseConnection {
     // Database credentials
     private static final String URL = "jdbc:mysql://metro.proxy.rlwy.net:26796/railway";
     private static final String USER = "root"; // Default XAMPP username
-    private static final String PASSWORD = "gKpzvYelGMfBeqTqNcDkBxMdltfRKYjC"; // Default XAMPP password is empty
+    private static final String PASSWORD = "gKpzvYelGMfBeqTqNcDkBxMdltfRKYjC"; 
 
     // Method to establish and return the connection
     public static Connection getConnection() {
         Connection conn = null;
         try {
-            // Load the MySQL JDBC Driver
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             
-            // Establish the connection
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Database connection successful!");
             
