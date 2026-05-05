@@ -43,27 +43,28 @@ public class SplashScreen extends javax.swing.JFrame {
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnStart.setBackground(new java.awt.Color(204, 0, 204));
+        btnStart.setBackground(java.awt.SystemColor.activeCaptionText);
         btnStart.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         btnStart.setForeground(new java.awt.Color(255, 255, 255));
         btnStart.setText("[ Press Start ]");
         btnStart.setBorderPainted(false);
         btnStart.setContentAreaFilled(false);
+        btnStart.setOpaque(true);
         btnStart.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnStartMouseClicked(evt);
             }
         });
         btnStart.addActionListener(this::btnStartActionPerformed);
-        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, 40));
+        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, -1, 70));
 
         lblSplashGIF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashGIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/yuumi.gif"))); // NOI18N
-        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 310, 240));
+        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 310, 240));
 
         lblSplashBG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/b3880201-magical-library-with-floating-books-in-whimsical-pixel-art-thumbnail.jpg"))); // NOI18N
-        jPanel3.add(lblSplashBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -130, 520, 520));
+        jPanel3.add(lblSplashBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -280, 760, 1010));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
