@@ -311,7 +311,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnAddEvent.setText("Create Event");
         btnAddEvent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddEvent.addActionListener(this::btnAddEventActionPerformed);
-        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 150, -1));
+        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 510, 150, -1));
 
         btnDelete1.setBackground(new java.awt.Color(147, 71, 144));
         btnDelete1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -319,7 +319,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnDelete1.setText("Delete");
         btnDelete1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDelete1.addActionListener(this::btnDelete1ActionPerformed);
-        jPanel2.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 120, -1));
+        jPanel2.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 470, 120, -1));
 
         btnUpdate.setBackground(new java.awt.Color(147, 71, 144));
         btnUpdate.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -327,7 +327,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnUpdate.setText("Update");
         btnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUpdate.addActionListener(this::btnUpdateActionPerformed);
-        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, 120, -1));
+        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 470, 120, -1));
 
         tblHostedEvents.setBackground(new java.awt.Color(102, 0, 102));
         tblHostedEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
@@ -367,13 +367,13 @@ public class AttendeePortal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tblHostedEvents);
 
-        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 435, 355));
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 435, 500));
 
         txtNewDescription.setEditable(false);
         txtNewDescription.setBackground(new java.awt.Color(102, 0, 102));
         txtNewDescription.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
         txtNewDescription.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtNewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 87, 381, 211));
+        jPanel2.add(txtNewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 87, 381, 360));
 
         txtdescrip.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         txtdescrip.setForeground(new java.awt.Color(255, 255, 255));

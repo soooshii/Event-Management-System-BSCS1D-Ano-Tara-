@@ -130,12 +130,14 @@ public class LoginScreen extends javax.swing.JFrame {
 
         chkPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         chkPassword.setText("Show Password");
+        chkPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         chkPassword.addActionListener(this::chkPasswordActionPerformed);
         pnlLogin.add(chkPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 303, -1, 32));
 
         btnSignUp.setBackground(new java.awt.Color(204, 204, 255));
         btnSignUp.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnSignUp.setText("Sign Up");
+        btnSignUp.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         btnSignUp.setContentAreaFilled(false);
         btnSignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSignUp.setFocusPainted(false);
@@ -167,6 +169,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnLogin.setBackground(new java.awt.Color(204, 204, 255));
         btnLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnLogin.setText("Login");
+        btnLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         btnLogin.setContentAreaFilled(false);
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.setFocusPainted(false);
@@ -190,6 +193,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnCreateAccount.setBackground(new java.awt.Color(204, 204, 255));
         btnCreateAccount.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnCreateAccount.setText("Create Account");
+        btnCreateAccount.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         btnCreateAccount.setContentAreaFilled(false);
         btnCreateAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCreateAccount.setFocusPainted(false);
@@ -204,6 +208,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnBackToLogin.setBackground(new java.awt.Color(204, 204, 255));
         btnBackToLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnBackToLogin.setText("Back to Login");
+        btnBackToLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         btnBackToLogin.setContentAreaFilled(false);
         btnBackToLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBackToLogin.setFocusPainted(false);

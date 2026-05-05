@@ -44,8 +44,8 @@ public class SplashScreen extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnStart.setBackground(new java.awt.Color(204, 0, 204));
-        btnStart.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
-        btnStart.setForeground(new java.awt.Color(255, 255, 204));
+        btnStart.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
+        btnStart.setForeground(new java.awt.Color(255, 255, 255));
         btnStart.setText("[ Press Start ]");
         btnStart.setBorderPainted(false);
         btnStart.setContentAreaFilled(false);
@@ -55,11 +55,11 @@ public class SplashScreen extends javax.swing.JFrame {
             }
         });
         btnStart.addActionListener(this::btnStartActionPerformed);
-        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, -1, 40));
+        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, 40));
 
         lblSplashGIF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashGIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/yuumi.gif"))); // NOI18N
-        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 310, 240));
+        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 310, 240));
 
         lblSplashBG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/b3880201-magical-library-with-floating-books-in-whimsical-pixel-art-thumbnail.jpg"))); // NOI18N
