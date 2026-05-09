@@ -111,7 +111,6 @@ public class LoginScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Events Management System");
-        setPreferredSize(new java.awt.Dimension(1001, 657));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(106, 0, 102));
@@ -126,13 +125,13 @@ public class LoginScreen extends javax.swing.JFrame {
 
         lblUsername.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblUsername.setText("Username");
-        pnlLogin.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 173, -1, -1));
+        pnlLogin.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
 
         chkPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         chkPassword.setText("Show Password");
         chkPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         chkPassword.addActionListener(this::chkPasswordActionPerformed);
-        pnlLogin.add(chkPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 303, -1, 32));
+        pnlLogin.add(chkPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 400, -1, 32));
 
         btnSignUp.setBackground(new java.awt.Color(204, 204, 255));
         btnSignUp.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -147,15 +146,15 @@ public class LoginScreen extends javax.swing.JFrame {
         btnSignUp.setOpaque(true);
         btnSignUp.setPreferredSize(new java.awt.Dimension(72, 33));
         btnSignUp.addActionListener(this::btnSignUpActionPerformed);
-        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, 140, -1));
+        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 450, 140, -1));
 
         txtUsername.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
-        pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 201, 308, -1));
+        pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 308, 30));
 
         lblPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblPassword.setText("Password ");
-        pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 241, -1, -1));
+        pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, -1, -1));
 
         txtPassword.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
@@ -164,7 +163,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 txtPasswordKeyPressed(evt);
             }
         });
-        pnlLogin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 263, 308, -1));
+        pnlLogin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, 308, 30));
 
         btnLogin.setBackground(new java.awt.Color(204, 204, 255));
         btnLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -176,10 +175,10 @@ public class LoginScreen extends javax.swing.JFrame {
         btnLogin.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnLogin.setOpaque(true);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 140, 33));
+        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 450, 140, 33));
 
         lblloginbg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblloginbg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/StockCake-Magical_Unicorn_Valley-3724818-standard.jpg"))); // NOI18N
+        lblloginbg1.setIcon(new javax.swing.ImageIcon("C:\\Users\\angela valerie\\Downloads\\1st Year 2nd Sem\\Com Prog\\PT\\login and signin.png")); // NOI18N
         pnlLogin.add(lblloginbg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 660));
 
         jPanel2.add(pnlLogin, "LOGIN");
