@@ -64,7 +64,7 @@ public class SplashScreen extends javax.swing.JFrame {
 
         lblSplashBG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/b3880201-magical-library-with-floating-books-in-whimsical-pixel-art-thumbnail.jpg"))); // NOI18N
-        jPanel3.add(lblSplashBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -100, -1, 530));
+        jPanel3.add(lblSplashBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -100, 520, 560));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 

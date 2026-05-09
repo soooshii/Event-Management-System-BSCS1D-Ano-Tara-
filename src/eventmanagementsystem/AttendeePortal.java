@@ -19,16 +19,84 @@ public class AttendeePortal extends javax.swing.JFrame {
         this.loggedInUser = username;
         lblWelcome.setText("Welcome to the Portal, " + loggedInUser + "!");
         
-        loadAvailableEvents();
+        loadAvailableEvents("");
         loadComboBoxEvents();
         loadHostedEvents();
         
-        jScrollPane1.getViewport().setBackground(tblEvents.getBackground());
         jScrollPane2.getViewport().setBackground(tblAttendees.getBackground());
         
-        tblEvents.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
         tblAttendees.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
         tblHostedEvents.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
+        
+        scrollDiscoverEvents.getViewport().setBackground(new java.awt.Color(35, 10, 50)); 
+        scrollDiscoverEvents.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        loadAvailableEvents("Upcoming Events");
+    }
+    
+    public void loadAvailableEvents(String filterSelection) {
+       javax.swing.JPanel cardContainer = new javax.swing.JPanel();
+        cardContainer.setLayout(new javax.swing.BoxLayout(cardContainer, javax.swing.BoxLayout.Y_AXIS)); 
+        cardContainer.setBackground(new java.awt.Color(35, 10, 50)); 
+        scrollDiscoverEvents.setViewportView(cardContainer);
+
+        try {
+            java.sql.Connection conn = DatabaseConnection.getConnection();
+            if (conn != null) {
+                
+                // 1. The Base Query (No date rules yet)
+                String sql = "SELECT e.event_id, e.event_name, e.max_slots, e.location, e.event_date, " +
+                             "(SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id) AS current_participants, " +
+                             "CASE WHEN e.event_date < CURDATE() THEN 'CONCLUDED' ELSE 'ACTIVE' END AS event_state " +
+                             "FROM events e ";
+                
+                // 2. The Dynamic Filter Logic!
+                if (filterSelection.equals("Ended Events")) {
+                    sql += "WHERE e.event_date < CURDATE() ";
+                } else if (filterSelection.equals("Upcoming Events")) {
+                    sql += "WHERE e.event_date >= CURDATE() ";
+                } 
+                // If the selection is "All Events", it skips the WHERE clause entirely and shows everything!
+
+                // 3. Finish the query by sorting it
+                sql += "ORDER BY e.event_date ASC";
+                
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                java.sql.ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    int eventId = rs.getInt("event_id");
+                    String eventName = rs.getString("event_name");
+                    int maxSlots = rs.getInt("max_slots");
+                    int participating = rs.getInt("current_participants");
+                    String location = rs.getString("location");
+                    java.sql.Date dateSql = rs.getDate("event_date");
+                    
+                    String slotsText = participating + " / " + maxSlots;
+                    String dateText = dateSql != null ? dateSql.toString() : "TBD";
+                    String statusState = rs.getString("event_state");
+
+                    EventCardUI card = new EventCardUI(eventId, eventName, slotsText, location, dateText, statusState);
+
+                    card.getViewButton().addActionListener(new java.awt.event.ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Opening details for: " + eventName);
+                        }
+                    });
+
+                    cardContainer.add(card);
+                }
+
+                rs.close();
+                pst.close();
+                conn.close();
+                
+                cardContainer.revalidate();
+                cardContainer.repaint();
+            }
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     private void loadComboBoxEvents() {
@@ -77,32 +145,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         }
     }
     
-    private void loadAvailableEvents() {
-       try {
-            javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblEvents.getModel();
-            model.setRowCount(0); 
-
-            java.sql.Connection conn = DatabaseConnection.getConnection();
-            
-            String sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events"; 
-            java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
-            java.sql.ResultSet rs = stmt.executeQuery();
-            
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getInt("event_id"),
-                    rs.getString("event_name"),
-                    rs.getString("event_date"), 
-                    rs.getString("location"),
-                    rs.getInt("max_slots")
-                });
-            }
-            
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Discover Events Error: " + e.getMessage());
-        }
-    }
-    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AttendeePortal.class.getName());
     private String loggedInUser;
 
@@ -112,20 +154,11 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblEvents = new javax.swing.JTable();
+        scrollDiscoverEvents = new javax.swing.JScrollPane();
         btnLogout = new javax.swing.JButton();
         lblWelcome = new javax.swing.JLabel();
         cmbFilter = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        txtDescription = new javax.swing.JTextField();
-        cmbEvents = new javax.swing.JComboBox<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblAttendees = new javax.swing.JTable();
-        btnJoinEvent = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnAddEvent = new javax.swing.JButton();
         btnDelete1 = new javax.swing.JButton();
@@ -135,6 +168,14 @@ public class AttendeePortal extends javax.swing.JFrame {
         txtNewDescription = new javax.swing.JTextField();
         txtdescrip = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        txtDescription = new javax.swing.JTextField();
+        cmbEvents = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblAttendees = new javax.swing.JTable();
+        btnJoinEvent = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Events Management System");
@@ -153,12 +194,69 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1001, 600));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setOpaque(false);
+        scrollDiscoverEvents.setBorder(null);
+        scrollDiscoverEvents.setForeground(new java.awt.Color(35, 10, 50));
+        scrollDiscoverEvents.setOpaque(false);
+        jPanel1.add(scrollDiscoverEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 600, 320));
 
-        tblEvents.setBackground(new java.awt.Color(102, 0, 102));
-        tblEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
-        tblEvents.setForeground(new java.awt.Color(255, 255, 255));
-        tblEvents.setModel(new javax.swing.table.DefaultTableModel(
+        btnLogout.setBackground(new java.awt.Color(147, 71, 144));
+        btnLogout.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogout.setText("Logout");
+        btnLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLogout.addActionListener(this::btnLogoutActionPerformed);
+        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, -1, -1));
+
+        lblWelcome.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
+        lblWelcome.setForeground(new java.awt.Color(255, 255, 255));
+        lblWelcome.setText("Welcome User!");
+        jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 260, 60));
+
+        cmbFilter.setBackground(new java.awt.Color(102, 0, 153));
+        cmbFilter.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        cmbFilter.setForeground(new java.awt.Color(255, 255, 255));
+        cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Upcoming Events", "Ended Events", "Full Events", "My Registered Events", " " }));
+        cmbFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbFilter.addActionListener(this::cmbFilterActionPerformed);
+        jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 600, 20));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
+
+        jTabbedPane1.addTab("Discover Events", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(232, 212, 183));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnAddEvent.setBackground(new java.awt.Color(147, 71, 144));
+        btnAddEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnAddEvent.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddEvent.setText("Create Event");
+        btnAddEvent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAddEvent.addActionListener(this::btnAddEventActionPerformed);
+        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 510, 150, -1));
+
+        btnDelete1.setBackground(new java.awt.Color(147, 71, 144));
+        btnDelete1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnDelete1.setForeground(new java.awt.Color(255, 255, 255));
+        btnDelete1.setText("Delete");
+        btnDelete1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDelete1.addActionListener(this::btnDelete1ActionPerformed);
+        jPanel2.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 470, 120, -1));
+
+        btnUpdate.setBackground(new java.awt.Color(147, 71, 144));
+        btnUpdate.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdate.setText("Update");
+        btnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUpdate.addActionListener(this::btnUpdateActionPerformed);
+        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 470, 120, -1));
+
+        tblHostedEvents.setBackground(new java.awt.Color(102, 0, 102));
+        tblHostedEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        tblHostedEvents.setForeground(new java.awt.Color(255, 255, 255));
+        tblHostedEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -184,45 +282,32 @@ public class AttendeePortal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblEvents.setFillsViewportHeight(true);
-        tblEvents.setOpaque(false);
-        tblEvents.setSelectionBackground(new java.awt.Color(102, 0, 153));
-        tblEvents.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        tblEvents.setShowGrid(true);
-        jScrollPane1.setViewportView(tblEvents);
-        if (tblEvents.getColumnModel().getColumnCount() > 0) {
-            tblEvents.getColumnModel().getColumn(0).setResizable(false);
-            tblEvents.getColumnModel().getColumn(4).setResizable(false);
-        }
+        tblHostedEvents.setFillsViewportHeight(true);
+        tblHostedEvents.setShowGrid(true);
+        tblHostedEvents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHostedEventsMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblHostedEvents);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 605, 380));
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 550, 500));
 
-        btnLogout.setBackground(new java.awt.Color(147, 71, 144));
-        btnLogout.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogout.setText("Logout");
-        btnLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLogout.addActionListener(this::btnLogoutActionPerformed);
-        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, -1, -1));
+        txtNewDescription.setEditable(false);
+        txtNewDescription.setBackground(new java.awt.Color(102, 0, 102));
+        txtNewDescription.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        txtNewDescription.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(txtNewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 381, 360));
 
-        lblWelcome.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
-        lblWelcome.setForeground(new java.awt.Color(255, 255, 255));
-        lblWelcome.setText("Welcome User!");
-        jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 260, 60));
+        txtdescrip.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
+        txtdescrip.setForeground(new java.awt.Color(255, 255, 255));
+        txtdescrip.setText("Description");
+        jPanel2.add(txtdescrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 100, -1));
 
-        cmbFilter.setBackground(new java.awt.Color(102, 0, 153));
-        cmbFilter.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
-        cmbFilter.setForeground(new java.awt.Color(255, 255, 255));
-        cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Upcoming Events", "Ended Events", "Full Events", "My Registered Events", " " }));
-        cmbFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmbFilter.addActionListener(this::cmbFilterActionPerformed);
-        jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 605, -1));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
-
-        jTabbedPane1.addTab("Discover Events", jPanel1);
+        jTabbedPane1.addTab("Host Event", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(232, 212, 183));
         jPanel3.setPreferredSize(new java.awt.Dimension(1001, 600));
@@ -299,89 +384,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Events Information", jPanel3);
-
-        jPanel2.setBackground(new java.awt.Color(232, 212, 183));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnAddEvent.setBackground(new java.awt.Color(147, 71, 144));
-        btnAddEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        btnAddEvent.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddEvent.setText("Create Event");
-        btnAddEvent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAddEvent.addActionListener(this::btnAddEventActionPerformed);
-        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 510, 150, -1));
-
-        btnDelete1.setBackground(new java.awt.Color(147, 71, 144));
-        btnDelete1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        btnDelete1.setForeground(new java.awt.Color(255, 255, 255));
-        btnDelete1.setText("Delete");
-        btnDelete1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDelete1.addActionListener(this::btnDelete1ActionPerformed);
-        jPanel2.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 470, 120, -1));
-
-        btnUpdate.setBackground(new java.awt.Color(147, 71, 144));
-        btnUpdate.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdate.setText("Update");
-        btnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUpdate.addActionListener(this::btnUpdateActionPerformed);
-        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 470, 120, -1));
-
-        tblHostedEvents.setBackground(new java.awt.Color(102, 0, 102));
-        tblHostedEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
-        tblHostedEvents.setForeground(new java.awt.Color(255, 255, 255));
-        tblHostedEvents.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Event ID", "Event Name", "Event Date", "Location", "Max Slots"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblHostedEvents.setFillsViewportHeight(true);
-        tblHostedEvents.setShowGrid(true);
-        tblHostedEvents.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblHostedEventsMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(tblHostedEvents);
-
-        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 435, 500));
-
-        txtNewDescription.setEditable(false);
-        txtNewDescription.setBackground(new java.awt.Color(102, 0, 102));
-        txtNewDescription.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
-        txtNewDescription.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtNewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 87, 381, 360));
-
-        txtdescrip.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        txtdescrip.setForeground(new java.awt.Color(255, 255, 255));
-        txtdescrip.setText("Description");
-        jPanel2.add(txtdescrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, 100, -1));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
-
-        jTabbedPane1.addTab("Host Event", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -475,75 +477,10 @@ public class AttendeePortal extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbEventsActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
-        String filter = (String) cmbFilter.getSelectedItem();
-        if (filter == null) return;
-
-        try {
-            javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblEvents.getModel();
-            model.setRowCount(0);
-
-            java.sql.Connection conn = DatabaseConnection.getConnection();
-            String sql = "";
-            java.sql.PreparedStatement stmt = null;
-
-            String firstName = "";
-            String lastName = "";
-            if (filter.equals("My Registered Events")) {
-                java.sql.PreparedStatement nameStmt = conn.prepareStatement("SELECT first_name, last_name FROM users WHERE username = ?");
-                nameStmt.setString(1, loggedInUser);
-                java.sql.ResultSet nameRs = nameStmt.executeQuery();
-                if (nameRs.next()) {
-                    firstName = nameRs.getString("first_name");
-                    lastName = nameRs.getString("last_name");
-                }
-            }
-
-            if (filter.equals("Upcoming Events")) {
-               
-                sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events WHERE event_date >= CURRENT_DATE";
-                stmt = conn.prepareStatement(sql);
-            } 
-            else if (filter.equals("Ended Events")) {
-              
-                sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events WHERE event_date < CURRENT_DATE";
-                stmt = conn.prepareStatement(sql);
-            } 
-            else if (filter.equals("Full Events")) {
-             
-                sql = "SELECT e.event_id, e.event_name, e.event_date, e.location, e.max_slots FROM events e " +
-                      "WHERE e.max_slots <= (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id)";
-                stmt = conn.prepareStatement(sql);
-            } 
-            else if (filter.equals("My Registered Events")) {
-         
-                sql = "SELECT e.event_id, e.event_name, e.event_date, e.location, e.max_slots " +
-                      "FROM events e JOIN registrations r ON e.event_id = r.event_id " +
-                      "WHERE r.first_name = ? AND r.last_name = ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setString(1, firstName);
-                stmt.setString(2, lastName);
-            } 
-            else {
-              
-                sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events";
-                stmt = conn.prepareStatement(sql);
-            }
-
-            java.sql.ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getInt("event_id"),
-                    rs.getString("event_name"),
-                    rs.getString("event_date"), 
-                    rs.getString("location"),  
-                    rs.getInt("max_slots")
-                });
-            }
-
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Filter Error: " + e.getMessage());
-        }
+    // Tell Java exactly what was clicked, then grab its text!
+    javax.swing.JComboBox sourceCombo = (javax.swing.JComboBox) evt.getSource();
+    String selectedFilter = sourceCombo.getSelectedItem().toString();
+    loadAvailableEvents(selectedFilter);
     }//GEN-LAST:event_cmbFilterActionPerformed
 
     private void btnJoinEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinEventActionPerformed
@@ -863,8 +800,7 @@ public class AttendeePortal extends javax.swing.JFrame {
 
     private void tblHostedEventsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHostedEventsMouseClicked
         // 1. Get the table model and find out which row was clicked
-        DefaultTableModel model = (DefaultTableModel) tblEvents.getModel();
-        int selectedRowIndex = tblEvents.getSelectedRow();
+      
 
         // 2. Grab the hidden Event ID from the very first column (Column 0)
        
@@ -909,13 +845,12 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblWelcome;
+    private javax.swing.JScrollPane scrollDiscoverEvents;
     private javax.swing.JTable tblAttendees;
-    private javax.swing.JTable tblEvents;
     private javax.swing.JTable tblHostedEvents;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtNewDescription;
