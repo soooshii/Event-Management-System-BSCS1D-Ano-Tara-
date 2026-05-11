@@ -125,13 +125,13 @@ public class LoginScreen extends javax.swing.JFrame {
 
         lblUsername.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblUsername.setText("Username");
-        pnlLogin.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
+        pnlLogin.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, -1, -1));
 
         chkPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         chkPassword.setText("Show Password");
         chkPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         chkPassword.addActionListener(this::chkPasswordActionPerformed);
-        pnlLogin.add(chkPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 400, -1, 32));
+        pnlLogin.add(chkPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, -1, 32));
 
         btnSignUp.setBackground(new java.awt.Color(204, 204, 255));
         btnSignUp.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -146,15 +146,15 @@ public class LoginScreen extends javax.swing.JFrame {
         btnSignUp.setOpaque(true);
         btnSignUp.setPreferredSize(new java.awt.Dimension(72, 33));
         btnSignUp.addActionListener(this::btnSignUpActionPerformed);
-        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 450, 140, -1));
+        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 470, 140, -1));
 
         txtUsername.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
-        pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 308, 30));
+        pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 308, 30));
 
         lblPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblPassword.setText("Password ");
-        pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, -1, -1));
+        pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 360, -1, -1));
 
         txtPassword.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
@@ -163,7 +163,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 txtPasswordKeyPressed(evt);
             }
         });
-        pnlLogin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, 308, 30));
+        pnlLogin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 308, 30));
 
         btnLogin.setBackground(new java.awt.Color(204, 204, 255));
         btnLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -175,10 +175,10 @@ public class LoginScreen extends javax.swing.JFrame {
         btnLogin.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnLogin.setOpaque(true);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 450, 140, 33));
+        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 470, 140, 33));
 
         lblloginbg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblloginbg1.setIcon(new javax.swing.ImageIcon("C:\\Users\\angela valerie\\Downloads\\1st Year 2nd Sem\\Com Prog\\PT\\login and signin.png")); // NOI18N
+        lblloginbg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/login and signin.png"))); // NOI18N
         pnlLogin.add(lblloginbg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 660));
 
         jPanel2.add(pnlLogin, "LOGIN");
@@ -202,7 +202,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnCreateAccount.setOpaque(true);
         btnCreateAccount.setPreferredSize(new java.awt.Dimension(72, 33));
         btnCreateAccount.addActionListener(this::btnCreateAccountActionPerformed);
-        pnlSignup.add(btnCreateAccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 160, -1));
+        pnlSignup.add(btnCreateAccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 460, 160, -1));
 
         btnBackToLogin.setBackground(new java.awt.Color(204, 204, 255));
         btnBackToLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -214,38 +214,44 @@ public class LoginScreen extends javax.swing.JFrame {
         btnBackToLogin.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnBackToLogin.setOpaque(true);
         btnBackToLogin.addActionListener(this::btnBackToLoginActionPerformed);
-        pnlSignup.add(btnBackToLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 140, 33));
+        pnlSignup.add(btnBackToLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 460, 140, 33));
 
         lblFirstName.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblFirstName.setText("First Name");
-        pnlSignup.add(lblFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 137, 100, -1));
+        pnlSignup.add(lblFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, 100, -1));
 
         lblLastName.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblLastName.setText("Last Name");
-        pnlSignup.add(lblLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 137, 100, -1));
+        pnlSignup.add(lblLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 100, -1));
 
+        txtPassword1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtPassword1.addActionListener(this::txtPassword1ActionPerformed);
-        pnlSignup.add(txtPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 220, 158, -1));
+        pnlSignup.add(txtPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 380, 158, -1));
 
         lblPassword1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblPassword1.setText("Password");
-        pnlSignup.add(lblPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 199, 100, -1));
-        pnlSignup.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 159, 158, -1));
+        pnlSignup.add(lblPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, 100, -1));
 
+        txtLastName.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        pnlSignup.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 320, 158, -1));
+
+        txtFirstName.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtFirstName.addActionListener(this::txtFirstNameActionPerformed);
-        pnlSignup.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 159, 158, -1));
-        pnlSignup.add(txtUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 220, 158, -1));
+        pnlSignup.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 158, -1));
+
+        txtUsername1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        pnlSignup.add(txtUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, 158, -1));
 
         chkPassword1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         chkPassword1.setText("Show Password");
         chkPassword1.addActionListener(this::chkPassword1ActionPerformed);
-        pnlSignup.add(chkPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 247, 160, 32));
+        pnlSignup.add(chkPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 410, 160, 32));
 
         lblUsername1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblUsername1.setText("Username");
-        pnlSignup.add(lblUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 199, 100, -1));
+        pnlSignup.add(lblUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 100, -1));
 
-        lblsignupbg2.setIcon(lblloginbg1.getIcon());
+        lblsignupbg2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/login and signin.png"))); // NOI18N
         lblsignupbg2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlSignup.add(lblsignupbg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 660));
 
@@ -258,11 +264,11 @@ public class LoginScreen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(905, 905, 905))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
         );
 
         pack();
@@ -365,11 +371,16 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void chkPassword1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPassword1ActionPerformed
-        if (chkPassword.isSelected()) {
-            txtPassword.setEchoChar((char) 0); // Shows the real letters
-        } else {
-            txtPassword.setEchoChar('*'); // Hides them again (or use • if you prefer!)
-        }
+       
+    if (chkPassword1.isSelected()) {
+       
+        txtPassword.setEchoChar((char) 0);
+        txtPassword1.setEchoChar((char) 0);
+    } else {
+        
+        txtPassword.setEchoChar('\u2022'); 
+        txtPassword1.setEchoChar('\u2022');
+    }
     }//GEN-LAST:event_chkPassword1ActionPerformed
 
     private void txtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstNameActionPerformed
@@ -381,11 +392,11 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassword1ActionPerformed
 
     private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
-         // 1. Safety Check: Added the extra name box to the check!
+// 1. Updated Validation Check (Notice the '1' on Username and Password)
         if (txtFirstName.getText().trim().isEmpty() ||
             txtLastName.getText().trim().isEmpty() ||
-            txtUsername.getText().trim().isEmpty() ||
-            String.valueOf(txtPassword.getPassword()).trim().isEmpty()) {
+            txtUsername1.getText().trim().isEmpty() || 
+            String.valueOf(txtPassword1.getPassword()).trim().isEmpty()) {
 
             javax.swing.JOptionPane.showMessageDialog(this, "Please fill in all fields!");
             return;
@@ -394,26 +405,25 @@ public class LoginScreen extends javax.swing.JFrame {
         try {
             java.sql.Connection conn = DatabaseConnection.getConnection();
 
-            // 2. The SQL command updated for first_name and last_name
-            String sql = "INSERT INTO users (first_name, last_name, username, password) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO users (first_name, last_name, username, password, role) VALUES (?, ?, ?, ?, 'Attendee')";
             java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
 
+            // 2. Updated Database Save (Notice the '1' on Username and Password)
             stmt.setString(1, txtFirstName.getText().trim());
             stmt.setString(2, txtLastName.getText().trim());
-            stmt.setString(3, txtUsername.getText().trim());
-            stmt.setString(4, String.valueOf(txtPassword.getPassword()));
+            stmt.setString(3, txtUsername1.getText().trim()); 
+            stmt.setString(4, String.valueOf(txtPassword1.getPassword())); 
 
             stmt.executeUpdate();
 
             javax.swing.JOptionPane.showMessageDialog(this, "Account Created Successfully! You can now log in.");
 
-            // 3. Kick them back to the Login Screen
-            LoginScreen login = new LoginScreen(); // Update this if your file is named differently!
+            // Kick them back to the Login Screen
+            LoginScreen login = new LoginScreen(); 
             login.setVisible(true);
             this.dispose();
 
         } catch (Exception e) {
-            // This will now pop up the REAL reason it is failing!
             javax.swing.JOptionPane.showMessageDialog(this, "Real Database Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnCreateAccountActionPerformed

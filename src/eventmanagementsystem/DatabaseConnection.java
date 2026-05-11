@@ -8,9 +8,9 @@ import javax.swing.JOptionPane;
 public class DatabaseConnection {
     
     // Database credentials
-    private static final String URL = "jdbc:mysql://metro.proxy.rlwy.net:26796/railway";
+    private static final String URL = "jdbc:mysql://localhost:3306/events_db";
     private static final String USER = "root"; // Default XAMPP username
-    private static final String PASSWORD = "gKpzvYelGMfBeqTqNcDkBxMdltfRKYjC"; 
+    private static final String PASSWORD = ""; 
 
     // Method to establish and return the connection
     public static Connection getConnection() {

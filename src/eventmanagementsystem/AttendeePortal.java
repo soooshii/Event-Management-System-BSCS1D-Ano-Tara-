@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package eventmanagementsystem;
 
 import java.sql.Connection;
@@ -12,6 +8,118 @@ import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 
 public class AttendeePortal extends javax.swing.JFrame {
+    
+    public void performDelete() {
+        int selectedRow = tblHostedEvents.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select an event from the table first!");
+            return;
+        }
+
+        // 1. GRAB THE ID (Column 0) INSTEAD OF THE NAME (Column 1)
+        int selectedEventId = Integer.parseInt(tblHostedEvents.getValueAt(selectedRow, 0).toString());
+        String selectedEventName = tblHostedEvents.getValueAt(selectedRow, 1).toString();
+
+        try {
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "Are you sure you want to permanently delete '" + selectedEventName + "'? This will also cancel all registrations.", 
+                    "Confirm Deletion", 
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                java.sql.Connection conn = DatabaseConnection.getConnection();
+                
+                // 2. DELETE USING THE EXACT ID
+                String delRegSql = "DELETE FROM registrations WHERE event_id = ?";
+                java.sql.PreparedStatement delRegStmt = conn.prepareStatement(delRegSql);
+                delRegStmt.setInt(1, selectedEventId);
+                delRegStmt.executeUpdate();
+
+                String delEventSql = "DELETE FROM events WHERE event_id = ?";
+                java.sql.PreparedStatement delEventStmt = conn.prepareStatement(delEventSql);
+                delEventStmt.setInt(1, selectedEventId);
+                delEventStmt.executeUpdate();
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Event deleted successfully!");
+
+                loadHostedEvents();
+                loadComboBoxEvents(); 
+                // Safely refresh the Discover Events cards too!
+                loadAvailableEvents(cmbFilter.getSelectedItem().toString()); 
+            }
+            
+        // 3. THIS IS THE CATCH BLOCK THAT WENT MISSING!
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Delete Error: " + e.getMessage());
+        }
+    }
+    
+    public void performCreate() {
+           
+        javax.swing.JTextField txtName = new javax.swing.JTextField();
+        javax.swing.JTextField txtYear = new javax.swing.JTextField("2026", 4);
+        javax.swing.JTextField txtMonth = new javax.swing.JTextField(2);
+        javax.swing.JTextField txtDay = new javax.swing.JTextField(2);
+        
+        javax.swing.JPanel datePanel = new javax.swing.JPanel();
+        datePanel.add(txtYear);
+        datePanel.add(new javax.swing.JLabel("-"));
+        datePanel.add(txtMonth);
+        datePanel.add(new javax.swing.JLabel("-"));
+        datePanel.add(txtDay);
+        
+        javax.swing.JTextField txtLoc = new javax.swing.JTextField();
+        javax.swing.JTextField txtSlots = new javax.swing.JTextField();
+
+        javax.swing.JTextArea txtDesc = new javax.swing.JTextArea(3, 20); // 3 rows tall
+        txtDesc.setLineWrap(true);
+        txtDesc.setWrapStyleWord(true);
+        javax.swing.JScrollPane descScroll = new javax.swing.JScrollPane(txtDesc);
+
+        Object[] formFields = {
+            "Event Name:", txtName,
+            "Event Date (YYYY-MM-DD):", datePanel,
+            "Location/Venue:", txtLoc,
+            "Max Slots:", txtSlots,
+            "Event Description:", descScroll
+        };
+
+        int result = javax.swing.JOptionPane.showConfirmDialog(this, formFields, "Add New Event", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE);
+
+        if (result == javax.swing.JOptionPane.OK_OPTION) {
+
+            if (txtName.getText().trim().isEmpty() || txtYear.getText().trim().isEmpty() || txtMonth.getText().trim().isEmpty() || txtDay.getText().trim().isEmpty() || txtLoc.getText().trim().isEmpty() || txtSlots.getText().trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "All fields are required!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+
+            try {
+                java.sql.Connection conn = DatabaseConnection.getConnection();
+                
+                String sql = "INSERT INTO events (event_name, event_date, location, max_slots, host_username, description) VALUES (?, ?, ?, ?, ?, ?)";
+                java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
+
+                stmt.setString(1, txtName.getText());
+                String formattedDate = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
+                stmt.setString(2, formattedDate);
+                stmt.setString(3, txtLoc.getText());
+                stmt.setInt(4, Integer.parseInt(txtSlots.getText()));
+                
+                stmt.setString(5, loggedInUser); // This seamlessly attaches the host!
+                stmt.setString(6, txtDesc.getText());
+
+                stmt.executeUpdate();
+                javax.swing.JOptionPane.showMessageDialog(this, "Event Successfully Added!");
+
+                loadComboBoxEvents();
+                
+                loadHostedEvents();
+
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error adding event: " + e.getMessage());
+            }
+        }
+    }
     
     public AttendeePortal(String username) {
         initComponents();
@@ -155,11 +263,13 @@ public class AttendeePortal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         scrollDiscoverEvents = new javax.swing.JScrollPane();
+        btnRefreshDiscover = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         lblWelcome = new javax.swing.JLabel();
         cmbFilter = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        btnRefreshHost = new javax.swing.JButton();
         btnAddEvent = new javax.swing.JButton();
         btnDelete1 = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
@@ -199,6 +309,13 @@ public class AttendeePortal extends javax.swing.JFrame {
         scrollDiscoverEvents.setOpaque(false);
         jPanel1.add(scrollDiscoverEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 600, 320));
 
+        btnRefreshDiscover.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        btnRefreshDiscover.setForeground(new java.awt.Color(255, 255, 255));
+        btnRefreshDiscover.setText("↻ Refresh");
+        btnRefreshDiscover.setOpaque(true);
+        btnRefreshDiscover.addActionListener(this::btnRefreshDiscoverActionPerformed);
+        jPanel1.add(btnRefreshDiscover, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, -1, -1));
+
         btnLogout.setBackground(new java.awt.Color(147, 71, 144));
         btnLogout.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnLogout.setForeground(new java.awt.Color(255, 255, 255));
@@ -228,6 +345,13 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(232, 212, 183));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnRefreshHost.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        btnRefreshHost.setForeground(new java.awt.Color(255, 255, 255));
+        btnRefreshHost.setText("↻ Refresh");
+        btnRefreshHost.setOpaque(true);
+        btnRefreshHost.addActionListener(this::btnRefreshHostActionPerformed);
+        jPanel2.add(btnRefreshHost, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, -1, -1));
 
         btnAddEvent.setBackground(new java.awt.Color(147, 71, 144));
         btnAddEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -538,9 +662,7 @@ public class AttendeePortal extends javax.swing.JFrame {
             insertStmt.executeUpdate();
 
             javax.swing.JOptionPane.showMessageDialog(this, "Successfully joined the event!");
-
-            cmbEventsActionPerformed(null); 
-
+            cmbEventsActionPerformed(null);
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Registration Error: " + e.getMessage());
         }
@@ -590,6 +712,7 @@ public class AttendeePortal extends javax.swing.JFrame {
 
                 pst.close();
                 conn.close();
+                cmbEventsActionPerformed(null);
             }
         } catch (java.sql.SQLException sqlErr) {
             javax.swing.JOptionPane.showMessageDialog(this, "Database Error while cancelling.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -599,112 +722,11 @@ public class AttendeePortal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnAddEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEventActionPerformed
-   
-        javax.swing.JTextField txtName = new javax.swing.JTextField();
-        javax.swing.JTextField txtYear = new javax.swing.JTextField("2026", 4);
-        javax.swing.JTextField txtMonth = new javax.swing.JTextField(2);
-        javax.swing.JTextField txtDay = new javax.swing.JTextField(2);
-        
-        javax.swing.JPanel datePanel = new javax.swing.JPanel();
-        datePanel.add(txtYear);
-        datePanel.add(new javax.swing.JLabel("-"));
-        datePanel.add(txtMonth);
-        datePanel.add(new javax.swing.JLabel("-"));
-        datePanel.add(txtDay);
-        
-        javax.swing.JTextField txtLoc = new javax.swing.JTextField();
-        javax.swing.JTextField txtSlots = new javax.swing.JTextField();
-
-        javax.swing.JTextArea txtDesc = new javax.swing.JTextArea(3, 20); // 3 rows tall
-        txtDesc.setLineWrap(true);
-        txtDesc.setWrapStyleWord(true);
-        javax.swing.JScrollPane descScroll = new javax.swing.JScrollPane(txtDesc);
-
-        Object[] formFields = {
-            "Event Name:", txtName,
-            "Event Date (YYYY-MM-DD):", datePanel,
-            "Location/Venue:", txtLoc,
-            "Max Slots:", txtSlots,
-            "Event Description:", descScroll
-        };
-
-        int result = javax.swing.JOptionPane.showConfirmDialog(this, formFields, "Add New Event", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE);
-
-        if (result == javax.swing.JOptionPane.OK_OPTION) {
-
-            if (txtName.getText().trim().isEmpty() || txtYear.getText().trim().isEmpty() || txtMonth.getText().trim().isEmpty() || txtDay.getText().trim().isEmpty() || txtLoc.getText().trim().isEmpty() || txtSlots.getText().trim().isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "All fields are required!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                return; 
-            }
-
-            try {
-                java.sql.Connection conn = DatabaseConnection.getConnection();
-                
-                String sql = "INSERT INTO events (event_name, event_date, location, max_slots, host_username, description) VALUES (?, ?, ?, ?, ?, ?)";
-                java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
-
-                stmt.setString(1, txtName.getText());
-                String formattedDate = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
-                stmt.setString(2, formattedDate);
-                stmt.setString(3, txtLoc.getText());
-                stmt.setInt(4, Integer.parseInt(txtSlots.getText()));
-                
-                stmt.setString(5, loggedInUser); // This seamlessly attaches the host!
-                stmt.setString(6, txtDesc.getText());
-
-                stmt.executeUpdate();
-                javax.swing.JOptionPane.showMessageDialog(this, "Event Successfully Added!");
-
-                loadComboBoxEvents();
-                cmbFilterActionPerformed(null);
-                loadHostedEvents();
-
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error adding event: " + e.getMessage());
-            }
-        }
+        performCreate();
     }//GEN-LAST:event_btnAddEventActionPerformed
 
     private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete1ActionPerformed
-       // 1. Check if they actually clicked a row in the table
-        int selectedRow = tblHostedEvents.getSelectedRow();
-        if (selectedRow == -1) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please select an event from the table first!");
-            return;
-        }
-
-        String selectedEvent = tblHostedEvents.getValueAt(selectedRow, 1).toString();
-
-        try {
-           
-            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
-                    "Are you sure you want to permanently delete '" + selectedEvent + "'? This will also cancel all registrations.", 
-                    "Confirm Deletion", 
-                    javax.swing.JOptionPane.YES_NO_OPTION);
-
-            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-                java.sql.Connection conn = DatabaseConnection.getConnection();
-                
-                String delRegSql = "DELETE FROM registrations WHERE event_id = (SELECT event_id FROM events WHERE event_name = ?)";
-                java.sql.PreparedStatement delRegStmt = conn.prepareStatement(delRegSql);
-                delRegStmt.setString(1, selectedEvent);
-                delRegStmt.executeUpdate();
-
-                String delEventSql = "DELETE FROM events WHERE event_name = ?";
-                java.sql.PreparedStatement delEventStmt = conn.prepareStatement(delEventSql);
-                delEventStmt.setString(1, selectedEvent);
-                delEventStmt.executeUpdate();
-
-                javax.swing.JOptionPane.showMessageDialog(this, "Event deleted successfully!");
-
-                loadHostedEvents();
-                loadComboBoxEvents(); 
-                cmbFilterActionPerformed(null);
-            }
-
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Delete Error: " + e.getMessage());
-        }
+        performDelete();
     }//GEN-LAST:event_btnDelete1ActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -790,7 +812,7 @@ public class AttendeePortal extends javax.swing.JFrame {
                 // 8. INSTANT REFRESH
                 loadHostedEvents();
                 loadComboBoxEvents();
-                cmbFilterActionPerformed(null);
+                
             }
 
         } catch (Exception e) {
@@ -799,12 +821,48 @@ public class AttendeePortal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void tblHostedEventsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHostedEventsMouseClicked
-        // 1. Get the table model and find out which row was clicked
-      
+                                                   
+        int selectedRow = tblHostedEvents.getSelectedRow();
+        if (selectedRow == -1) return;
 
-        // 2. Grab the hidden Event ID from the very first column (Column 0)
-       
+        // Grab the hidden Event ID from Column 0
+        int eventId = Integer.parseInt(tblHostedEvents.getValueAt(selectedRow, 0).toString());
+
+        try {
+            java.sql.Connection conn = DatabaseConnection.getConnection();
+            String sql = "SELECT description FROM events WHERE event_id = ?";
+            java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, eventId);
+            java.sql.ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String desc = rs.getString("description");
+                if (desc == null || desc.trim().isEmpty()) {
+                    txtNewDescription.setText("No description provided.");
+                } else {
+                    txtNewDescription.setText(desc);
+                }
+            }
+        } catch (Exception e) {
+            txtNewDescription.setText("Error loading description.");
+        }
     }//GEN-LAST:event_tblHostedEventsMouseClicked
+
+    private void btnRefreshDiscoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshDiscoverActionPerformed
+
+    String currentFilter = cmbFilter.getSelectedItem().toString();
+    loadAvailableEvents(currentFilter);
+    }//GEN-LAST:event_btnRefreshDiscoverActionPerformed
+
+    private void btnRefreshHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshHostActionPerformed
+// 1. Refresh the table data
+    loadHostedEvents();
+    
+    // 2. Also refresh the ComboBox on the third tab just to keep everything perfectly synced
+    loadComboBoxEvents();
+    
+    // 3. Clear the description box on the right so it doesn't show old data
+    txtNewDescription.setText("");    }//GEN-LAST:event_btnRefreshHostActionPerformed
 
     /**
      * @param args the command line arguments
@@ -836,6 +894,8 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete1;
     private javax.swing.JButton btnJoinEvent;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnRefreshDiscover;
+    private javax.swing.JButton btnRefreshHost;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cmbEvents;
     private javax.swing.JComboBox<String> cmbFilter;

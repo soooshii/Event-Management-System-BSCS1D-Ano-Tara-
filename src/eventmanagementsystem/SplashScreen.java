@@ -56,17 +56,17 @@ public class SplashScreen extends javax.swing.JFrame {
             }
         });
         btnStart.addActionListener(this::btnStartActionPerformed);
-        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, -1, 70));
+        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, -1, 70));
 
         lblSplashGIF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashGIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/yuumi.gif"))); // NOI18N
-        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 310, 240));
+        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 310, 240));
 
         lblSplashBG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/b3880201-magical-library-with-floating-books-in-whimsical-pixel-art-thumbnail.jpg"))); // NOI18N
-        jPanel3.add(lblSplashBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -100, 520, 560));
+        jPanel3.add(lblSplashBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -70, 510, 510));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
