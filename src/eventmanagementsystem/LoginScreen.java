@@ -140,7 +140,7 @@ public class LoginScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Events Management System");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(1000, 700));
+        setPreferredSize(new java.awt.Dimension(1001, 657));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(106, 0, 102));
@@ -149,7 +149,7 @@ public class LoginScreen extends javax.swing.JFrame {
         pnlLogin.setBackground(new java.awt.Color(147, 71, 144));
         pnlLogin.setAlignmentX(0.0F);
         pnlLogin.setAlignmentY(0.0F);
-        pnlLogin.setPreferredSize(new java.awt.Dimension(800, 657));
+        pnlLogin.setPreferredSize(new java.awt.Dimension(1001, 657));
         pnlLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblWelcome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Welcome.png"))); // NOI18N
@@ -227,6 +227,7 @@ public class LoginScreen extends javax.swing.JFrame {
         pnlSignup.setToolTipText("");
         pnlSignup.setAutoscrolls(true);
         pnlSignup.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlSignup.setMinimumSize(new java.awt.Dimension(1001, 657));
         pnlSignup.setPreferredSize(new java.awt.Dimension(1001, 657));
         pnlSignup.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -317,7 +318,7 @@ public class LoginScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -348,7 +349,7 @@ public class LoginScreen extends javax.swing.JFrame {
         java.sql.Connection conn = DatabaseConnection.getConnection();
         
         if (conn != null) {
-            java.sql.PreparedStatement pst = conn.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
+            java.sql.PreparedStatement pst = conn.prepareStatement("SELECT * FROM users WHERE BINARY username = ? AND BINARY  password = ?");
             
             // Now Java knows what these variables are because they were declared at the top!
             pst.setString(1, username);

@@ -88,31 +88,63 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         if (result == javax.swing.JOptionPane.OK_OPTION) {
 
-            if (txtName.getText().trim().isEmpty() || txtYear.getText().trim().isEmpty() || txtMonth.getText().trim().isEmpty() || txtDay.getText().trim().isEmpty() || txtLoc.getText().trim().isEmpty() || txtSlots.getText().trim().isEmpty()) {
+            if (txtName.getText().trim().isEmpty() || txtYear.getText().trim().isEmpty() || txtMonth.getText().trim().isEmpty() || txtDay.getText().trim().isEmpty() || txtLoc.getText().trim().isEmpty() || txtSlots.getText().trim().isEmpty() || txtDesc.getText().trim().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "All fields are required!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
                 return; 
             }
+            
+            int slots;
+            String formattedDate; // Define this here so the database block can see it
 
             try {
+                // 2. Validate Slots (Positive Integer check)
+                slots = Integer.parseInt(txtSlots.getText().trim());
+                if (slots <= 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Max Slots must be 1 or greater!", "Invalid Number", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // 3. DATE VALIDATION: This prevents past dates like Feb 12 when today is May 12
+                int year = Integer.parseInt(txtYear.getText().trim());
+                int month = Integer.parseInt(txtMonth.getText().trim());
+                int day = Integer.parseInt(txtDay.getText().trim());
+
+                // Format with leading zeros (e.g., month 5 becomes "05") to prevent crashes
+                formattedDate = String.format("%d-%02d-%02d", year, month, day);
+
+                java.time.LocalDate eventDate = java.time.LocalDate.parse(formattedDate);
+                java.time.LocalDate today = java.time.LocalDate.now();
+
+                if (eventDate.isBefore(today)) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "Error: You cannot pick a past date!\nToday is " + today,
+                            "Date Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return; // Stops the code here!
+                }
+
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please enter valid numbers for Date and Max Slots.", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 4. Database Insertion (Updated to use our validated variables)
+            try {
                 java.sql.Connection conn = DatabaseConnection.getConnection();
-                
                 String sql = "INSERT INTO events (event_name, event_date, location, max_slots, host_username, description) VALUES (?, ?, ?, ?, ?, ?)";
                 java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
 
                 stmt.setString(1, txtName.getText());
-                String formattedDate = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
-                stmt.setString(2, formattedDate);
+                stmt.setString(2, formattedDate); // Uses the validated future date
                 stmt.setString(3, txtLoc.getText());
-                stmt.setInt(4, Integer.parseInt(txtSlots.getText()));
-                
-                stmt.setString(5, loggedInUser); // This seamlessly attaches the host!
+                stmt.setInt(4, slots);            // Uses the validated positive integer
+
+                stmt.setString(5, loggedInUser);
                 stmt.setString(6, txtDesc.getText());
 
                 stmt.executeUpdate();
                 javax.swing.JOptionPane.showMessageDialog(this, "Event Successfully Added!");
 
                 loadComboBoxEvents();
-                
                 loadHostedEvents();
 
             } catch (Exception e) {
