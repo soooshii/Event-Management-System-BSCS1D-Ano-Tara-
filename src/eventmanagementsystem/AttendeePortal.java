@@ -392,6 +392,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Events Management System");
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1001, 657));
         setResizable(false);
 
         jTabbedPane1.setBackground(new java.awt.Color(106, 0, 102));
@@ -465,6 +466,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         jTabbedPane1.addTab("Discover Events", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(232, 212, 183));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1001, 657));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnRefreshHost.setBackground(new java.awt.Color(147, 71, 144));
@@ -473,7 +475,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnRefreshHost.setText("↻ Refresh");
         btnRefreshHost.setOpaque(true);
         btnRefreshHost.addActionListener(this::btnRefreshHostActionPerformed);
-        jPanel2.add(btnRefreshHost, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, -1, -1));
+        jPanel2.add(btnRefreshHost, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 540, -1, -1));
 
         btnAddEvent.setBackground(new java.awt.Color(147, 71, 144));
         btnAddEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -481,7 +483,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnAddEvent.setText("Create Event");
         btnAddEvent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddEvent.addActionListener(this::btnAddEventActionPerformed);
-        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 510, 150, -1));
+        jPanel2.add(btnAddEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 510, 150, -1));
 
         btnDelete1.setBackground(new java.awt.Color(147, 71, 144));
         btnDelete1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -497,7 +499,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnUpdate.setText("Update");
         btnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUpdate.addActionListener(this::btnUpdateActionPerformed);
-        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 470, 120, -1));
+        jPanel2.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 470, 120, -1));
 
         tblHostedEvents.setBackground(new java.awt.Color(102, 0, 102));
         tblHostedEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
@@ -537,18 +539,18 @@ public class AttendeePortal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tblHostedEvents);
 
-        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 550, 500));
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 540, 480));
 
         txtNewDescription.setEditable(false);
         txtNewDescription.setBackground(new java.awt.Color(102, 0, 102));
         txtNewDescription.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
         txtNewDescription.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(txtNewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 381, 360));
+        jPanel2.add(txtNewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(641, 90, 290, 360));
 
         txtdescrip.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         txtdescrip.setForeground(new java.awt.Color(255, 255, 255));
         txtdescrip.setText("Description");
-        jPanel2.add(txtdescrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 100, -1));
+        jPanel2.add(txtdescrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 100, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
@@ -562,17 +564,17 @@ public class AttendeePortal extends javax.swing.JFrame {
         lblTotal.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblTotal.setText("Total: 0");
-        jPanel3.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, -1, -1));
+        jPanel3.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 390, -1, -1));
 
         lblPresent.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         lblPresent.setForeground(new java.awt.Color(255, 255, 255));
         lblPresent.setText("Present: 0");
-        jPanel3.add(lblPresent, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, -1, -1));
+        jPanel3.add(lblPresent, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, -1, -1));
 
         lblAbsent.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         lblAbsent.setForeground(new java.awt.Color(255, 255, 255));
         lblAbsent.setText("Absent: 0");
-        jPanel3.add(lblAbsent, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 390, -1, -1));
+        jPanel3.add(lblAbsent, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 390, -1, -1));
 
         lblConfirmed.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         lblConfirmed.setForeground(new java.awt.Color(255, 255, 255));
@@ -591,7 +593,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         cmbEvents.setForeground(new java.awt.Color(255, 255, 255));
         cmbEvents.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbEvents.addActionListener(this::cmbEventsActionPerformed);
-        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, 220, -1));
+        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 220, -1));
 
         jScrollPane2.setOpaque(false);
 
@@ -619,7 +621,7 @@ public class AttendeePortal extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -644,21 +646,21 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnUpdateStatus.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateStatus.setText("Update Status");
         btnUpdateStatus.addActionListener(this::btnUpdateStatusActionPerformed);
-        jPanel3.add(btnUpdateStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 440, 160, -1));
+        jPanel3.add(btnUpdateStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, 160, -1));
 
         btnJoinEvent.setBackground(new java.awt.Color(147, 71, 144));
         btnJoinEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnJoinEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnJoinEvent.setText("Join");
         btnJoinEvent.addActionListener(this::btnJoinEventActionPerformed);
-        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, 60, -1));
+        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 510, 60, -1));
 
         btnCancel.setBackground(new java.awt.Color(147, 71, 144));
         btnCancel.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(this::btnCancelActionPerformed);
-        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 480, 90, -1));
+        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 510, 90, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
