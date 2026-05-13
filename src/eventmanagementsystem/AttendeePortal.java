@@ -261,11 +261,15 @@ public class AttendeePortal extends javax.swing.JFrame {
                     EventCardUI card = new EventCardUI(eventId, eventName, slotsText, location, dateText, statusState);
 
                     card.getViewButton().addActionListener(new java.awt.event.ActionListener() {
-                        @Override
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            javax.swing.JOptionPane.showMessageDialog(null, "Opening details for: " + eventName);
-                        }
-                    });
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            // 1. Switch the screen to the "Events Information" tab (Index 2)
+            jTabbedPane1.setSelectedIndex(2);
+            
+            // 2. Auto-select this specific event in the ComboBox!
+            cmbEvents.setSelectedItem(eventName);
+        }
+    });
 
                     cardContainer.add(card);
                 }
@@ -756,17 +760,15 @@ public class AttendeePortal extends javax.swing.JFrame {
                 else if(status.equals("Absent")) absent++;
                 else if(status.equals("Pending")) pending++;
             }
-            lblTotal.setText("Total Registrants: " + total);
+            lblTotal.setText("Total: " + total);
             lblPresent.setText("Present: " + present);
             lblAbsent.setText("Absent: " + absent);
             lblPending.setText("Pending: " + pending);
     }//GEN-LAST:event_cmbEventsActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
-    // Tell Java exactly what was clicked, then grab its text!
-    javax.swing.JComboBox sourceCombo = (javax.swing.JComboBox) evt.getSource();
-    String selectedFilter = sourceCombo.getSelectedItem().toString();
-    loadAvailableEvents(selectedFilter);
+    String selectedFilter = cmbFilter.getSelectedItem().toString();
+        loadAvailableEvents(selectedFilter);
     }//GEN-LAST:event_cmbFilterActionPerformed
 
     private void btnJoinEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinEventActionPerformed
