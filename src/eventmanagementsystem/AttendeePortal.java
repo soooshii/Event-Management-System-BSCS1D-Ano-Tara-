@@ -372,7 +372,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         lblTotal = new javax.swing.JLabel();
         lblPresent = new javax.swing.JLabel();
         lblAbsent = new javax.swing.JLabel();
-        lblPending = new javax.swing.JLabel();
+        lblConfirmed = new javax.swing.JLabel();
         txtDescription = new javax.swing.JTextField();
         cmbEvents = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -567,10 +567,10 @@ public class AttendeePortal extends javax.swing.JFrame {
         lblAbsent.setText("Absent: 0");
         jPanel3.add(lblAbsent, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 390, -1, -1));
 
-        lblPending.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
-        lblPending.setForeground(new java.awt.Color(255, 255, 255));
-        lblPending.setText("Pending: 0");
-        jPanel3.add(lblPending, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 390, -1, -1));
+        lblConfirmed.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblConfirmed.setForeground(new java.awt.Color(255, 255, 255));
+        lblConfirmed.setText("Confirmed: 0");
+        jPanel3.add(lblConfirmed, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 390, -1, -1));
 
         txtDescription.setEditable(false);
         txtDescription.setBackground(new java.awt.Color(102, 0, 102));
@@ -752,18 +752,18 @@ public class AttendeePortal extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Error loading event details: " + e.getMessage());
         }      
         
-            int total = 0, present = 0, absent = 0, pending = 0;
+            int total = 0, present = 0, absent = 0, confirmed = 0;
             for(int i = 0; i < tblAttendees.getRowCount(); i++) {
                 String status = tblAttendees.getValueAt(i, 3).toString();
                 total++;
                 if(status.equals("Present")) present++;
                 else if(status.equals("Absent")) absent++;
-                else if(status.equals("Pending")) pending++;
+                else if(status.equals("Confirmed")) confirmed++;
             }
             lblTotal.setText("Total: " + total);
             lblPresent.setText("Present: " + present);
             lblAbsent.setText("Absent: " + absent);
-            lblPending.setText("Pending: " + pending);
+            lblConfirmed.setText("Confirmed: " + confirmed);
     }//GEN-LAST:event_cmbEventsActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
@@ -1090,11 +1090,9 @@ public class AttendeePortal extends javax.swing.JFrame {
             return;
         }
         
-        // Grab the hidden Registration ID (Column 0)
         String regId = tblAttendees.getValueAt(selectedRow, 0).toString();
         
-        // Give the Admin a popup choice
-        String[] options = {"Present", "Absent", "Pending"};
+        String[] options = {"Present", "Absent", "Confirmed"};
         int choice = javax.swing.JOptionPane.showOptionDialog(this, "Mark attendee as:", "Update Attendance",
             javax.swing.JOptionPane.DEFAULT_OPTION, javax.swing.JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 
@@ -1161,7 +1159,7 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblAbsent;
     private javax.swing.JLabel lblBG;
-    private javax.swing.JLabel lblPending;
+    private javax.swing.JLabel lblConfirmed;
     private javax.swing.JLabel lblPresent;
     private javax.swing.JLabel lblStatEvents;
     private javax.swing.JLabel lblStatFull;
