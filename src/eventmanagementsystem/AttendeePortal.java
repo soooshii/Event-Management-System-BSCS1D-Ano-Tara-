@@ -686,9 +686,26 @@ public class AttendeePortal extends javax.swing.JFrame {
 
             String email = javax.swing.JOptionPane.showInputDialog(this, "Enter your Email Address to register:");
             if (email == null || email.trim().isEmpty()) return;
+            
+            String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+            if (!email.matches(emailRegex)) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Registration Failed: Please enter a valid email address (e.g., name@example.com).",
+                        "Invalid Email Format",
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                return; // Stops the code from continuing
+            }
 
             String contact = javax.swing.JOptionPane.showInputDialog(this, "Enter your Contact Number:");
             if (contact == null || contact.trim().isEmpty()) return; 
+            
+            if (contact.length() != 11 || !contact.matches("\\d+")) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Registration Failed: Contact number must be exactly 11 digits and contain only numbers.", 
+                "Invalid Contact Number", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return; // Stops the code from reaching the INSERT statement
+        }
 
             String insertSql = "INSERT INTO registrations (event_id, first_name, last_name, email, contact_number, attendance_status) VALUES (?, ?, ?, ?, ?, 'Confirmed')";
             java.sql.PreparedStatement insertStmt = conn.prepareStatement(insertSql);
