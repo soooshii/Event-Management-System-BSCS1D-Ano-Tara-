@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  * @author admin
  */
 public class LoginScreen extends javax.swing.JFrame {
+    public static String user_name;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginScreen.class.getName());
 
@@ -44,6 +45,7 @@ public class LoginScreen extends javax.swing.JFrame {
     
     public LoginScreen() {
        initComponents();
+       lbl_welcome.setText("Welcome, " + user_name);
        
        
        
