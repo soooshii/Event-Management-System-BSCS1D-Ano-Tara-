@@ -186,7 +186,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnSignUp.addActionListener(this::btnSignUpActionPerformed);
         pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, 140, -1));
 
-        txtUsername.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
         pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 380, 308, 30));
 
@@ -195,7 +195,7 @@ public class LoginScreen extends javax.swing.JFrame {
         lblPassword.setText("Password ");
         pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
 
-        txtPassword.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -269,7 +269,7 @@ public class LoginScreen extends javax.swing.JFrame {
         lblLastName.setText("Last Name");
         pnlSignup.add(lblLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, 100, -1));
 
-        txtPassword1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        txtPassword1.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         txtPassword1.addActionListener(this::txtPassword1ActionPerformed);
         pnlSignup.add(txtPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 440, 158, -1));
 
@@ -278,14 +278,14 @@ public class LoginScreen extends javax.swing.JFrame {
         lblPassword1.setText("Password");
         pnlSignup.add(lblPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 100, -1));
 
-        txtLastName.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        txtLastName.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         pnlSignup.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 380, 158, -1));
 
-        txtFirstName.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        txtFirstName.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         txtFirstName.addActionListener(this::txtFirstNameActionPerformed);
         pnlSignup.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, 158, -1));
 
-        txtUsername1.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        txtUsername1.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         pnlSignup.add(txtUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 440, 158, -1));
 
         chkPassword1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N

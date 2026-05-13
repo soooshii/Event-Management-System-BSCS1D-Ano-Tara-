@@ -483,36 +483,43 @@ public class AttendeePortal extends javax.swing.JFrame {
         txtDescription.setBackground(new java.awt.Color(102, 0, 102));
         txtDescription.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtDescription.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 429, 300));
+        txtDescription.addActionListener(this::txtDescriptionActionPerformed);
+        jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 400, 570, 140));
 
         cmbEvents.setBackground(new java.awt.Color(102, 0, 153));
         cmbEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         cmbEvents.setForeground(new java.awt.Color(255, 255, 255));
         cmbEvents.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbEvents.addActionListener(this::cmbEventsActionPerformed);
-        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 240, -1));
+        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 220, -1));
 
         jScrollPane2.setOpaque(false);
 
         tblAttendees.setBackground(new java.awt.Color(102, 0, 102));
-        tblAttendees.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        tblAttendees.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         tblAttendees.setForeground(new java.awt.Color(255, 255, 255));
         tblAttendees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Reg ID", "First Name", "Last Name", "Status"
+                "Reg ID", "First Name", "Last Name", "Email", "Phone Number", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -527,24 +534,24 @@ public class AttendeePortal extends javax.swing.JFrame {
         tblAttendees.setShowGrid(true);
         jScrollPane2.setViewportView(tblAttendees);
         if (tblAttendees.getColumnModel().getColumnCount() > 0) {
-            tblAttendees.getColumnModel().getColumn(0).setResizable(false);
+            tblAttendees.getColumnModel().getColumn(3).setPreferredWidth(200);
         }
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 440, 460));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 820, 310));
 
         btnJoinEvent.setBackground(new java.awt.Color(147, 71, 144));
         btnJoinEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnJoinEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnJoinEvent.setText("Join");
         btnJoinEvent.addActionListener(this::btnJoinEventActionPerformed);
-        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 510, 80, -1));
+        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 480, 80, -1));
 
         btnCancel.setBackground(new java.awt.Color(147, 71, 144));
         btnCancel.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(this::btnCancelActionPerformed);
-        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, -1, -1));
+        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 480, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
@@ -619,9 +626,12 @@ public class AttendeePortal extends javax.swing.JFrame {
             javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblAttendees.getModel();
             model.setRowCount(0);
 
-            String rosterSql = "SELECT r.registration_id, r.first_name, r.last_name, r.attendance_status " +
-                               "FROM registrations r JOIN events e ON r.event_id = e.event_id " +
-                               "WHERE e.event_name = ?";
+            // Make sure these column names match your database exactly
+            // Change your rosterSql to this:
+            String rosterSql = "SELECT r.registration_id, r.first_name, r.last_name, r.email, r.contact_number, r.attendance_status "
+                    + "FROM registrations r "
+                    + "JOIN events e ON r.event_id = e.event_id "
+                    + "WHERE e.event_name = ?";
             
             java.sql.PreparedStatement rosterStmt = conn.prepareStatement(rosterSql);
             rosterStmt.setString(1, selectedEvent);
@@ -632,6 +642,8 @@ public class AttendeePortal extends javax.swing.JFrame {
                     rosterRs.getInt("registration_id"),
                     rosterRs.getString("first_name"),
                     rosterRs.getString("last_name"),
+                    rosterRs.getString("email"),
+                    rosterRs.getString("contact_number"),
                     rosterRs.getString("attendance_status")
                 });
             }
@@ -933,6 +945,10 @@ public class AttendeePortal extends javax.swing.JFrame {
     
     // 3. Clear the description box on the right so it doesn't show old data
     txtNewDescription.setText("");    }//GEN-LAST:event_btnRefreshHostActionPerformed
+
+    private void txtDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescriptionActionPerformed
 
     /**
      * @param args the command line arguments
