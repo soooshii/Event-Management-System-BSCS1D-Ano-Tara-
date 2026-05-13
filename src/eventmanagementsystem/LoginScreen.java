@@ -149,6 +149,7 @@ public class LoginScreen extends javax.swing.JFrame {
         pnlLogin.setBackground(new java.awt.Color(147, 71, 144));
         pnlLogin.setAlignmentX(0.0F);
         pnlLogin.setAlignmentY(0.0F);
+        pnlLogin.setMinimumSize(new java.awt.Dimension(1001, 657));
         pnlLogin.setPreferredSize(new java.awt.Dimension(1001, 657));
         pnlLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

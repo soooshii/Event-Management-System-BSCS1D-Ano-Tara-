@@ -272,7 +272,10 @@ public class AttendeePortal extends javax.swing.JFrame {
 
             java.sql.Connection conn = DatabaseConnection.getConnection();
             
-            String sql = "SELECT event_id, event_name, event_date, location, max_slots FROM events WHERE host_username = ?";
+            String sql = "SELECT e.event_id, e.event_name, e.event_date, e.location, e.max_slots, "
+                    + "(SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id) AS reg_count "
+                    + "FROM events e WHERE e.host_username = ?";
+            
             java.sql.PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, loggedInUser); 
             
@@ -284,7 +287,8 @@ public class AttendeePortal extends javax.swing.JFrame {
                     rs.getString("event_name"),
                     rs.getString("event_date"),
                     rs.getString("location"),
-                    rs.getInt("max_slots")
+                    rs.getInt("max_slots"),
+                    rs.getInt("reg_count")
                 });
             }
         } catch (Exception e) {
@@ -340,7 +344,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1001, 657));
 
         jPanel1.setBackground(new java.awt.Color(232, 212, 183));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1001, 600));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1001, 657));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         scrollDiscoverEvents.setBorder(null);
@@ -420,20 +424,20 @@ public class AttendeePortal extends javax.swing.JFrame {
         tblHostedEvents.setForeground(new java.awt.Color(255, 255, 255));
         tblHostedEvents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Event ID", "Event Name", "Event Date", "Location", "Max Slots"
+                "Event ID", "Event Name", "Event Date", "Location", "Max Slots", "Registrant"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -472,7 +476,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         jTabbedPane1.addTab("Host Event", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(232, 212, 183));
-        jPanel3.setPreferredSize(new java.awt.Dimension(1001, 600));
+        jPanel3.setPreferredSize(new java.awt.Dimension(1001, 657));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtDescription.setEditable(false);
@@ -552,9 +556,8 @@ public class AttendeePortal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
-                .addGap(16, 16, 16))
+                .addGap(0, 0, 0)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -799,6 +802,8 @@ public class AttendeePortal extends javax.swing.JFrame {
             String currentDate = tblHostedEvents.getValueAt(selectedRow, 2).toString();
             String currentLocation = tblHostedEvents.getValueAt(selectedRow, 3).toString();
             String currentSlots = tblHostedEvents.getValueAt(selectedRow, 4).toString();
+            
+            int registrantCount = Integer.parseInt(tblHostedEvents.getValueAt(selectedRow, 5).toString());
 
             // Split the YYYY-MM-DD date back into 3 pieces for your specific UI
             String[] dateParts = currentDate.split("-");
@@ -850,16 +855,26 @@ public class AttendeePortal extends javax.swing.JFrame {
             // 7. If the user clicks "OK", update the database
             if (result == javax.swing.JOptionPane.OK_OPTION) {
                 
+                String formattedDate = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
+
+                // If the date is different AND people have already joined...
+                if (!formattedDate.equals(currentDate) && registrantCount > 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "Update Denied: You cannot change the date because " + registrantCount + " users have already registered!",
+                            "Update Blocked",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return; // STOP the update here
+                }
+                
                 String updateSql = "UPDATE events SET event_name = ?, event_date = ?, location = ?, max_slots = ?, description = ? WHERE event_id = ?";
                 java.sql.PreparedStatement updateStmt = conn.prepareStatement(updateSql);
 
                 updateStmt.setString(1, txtName.getText());
-                String formattedDate = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
                 updateStmt.setString(2, formattedDate);
                 updateStmt.setString(3, txtLoc.getText());
                 updateStmt.setInt(4, Integer.parseInt(txtSlots.getText()));
                 updateStmt.setString(5, txtDesc.getText());
-                updateStmt.setInt(6, eventId); // Uses the hidden ID to safely update the exact right row!
+                updateStmt.setInt(6, eventId);
 
                 updateStmt.executeUpdate();
                 javax.swing.JOptionPane.showMessageDialog(this, "Event Successfully Updated!");
