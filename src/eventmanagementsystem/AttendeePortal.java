@@ -761,7 +761,7 @@ public class AttendeePortal extends javax.swing.JFrame {
         
             int total = 0, present = 0, absent = 0, confirmed = 0;
             for(int i = 0; i < tblAttendees.getRowCount(); i++) {
-                String status = tblAttendees.getValueAt(i, 3).toString();
+                String status = tblAttendees.getValueAt(i, 5).toString();
                 total++;
                 if(status.equals("Present")) present++;
                 else if(status.equals("Absent")) absent++;
