@@ -698,6 +698,19 @@ public class AttendeePortal extends javax.swing.JFrame {
                 javax.swing.JOptionPane.showMessageDialog(this, "You are already registered for this event!");
                 return; 
             }
+            
+            String checkCapacitySql = "SELECT e.max_slots, (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id) AS current_count "
+                    + "FROM events e WHERE e.event_name = ?";
+            java.sql.PreparedStatement capacityStmt = conn.prepareStatement(checkCapacitySql);
+            capacityStmt.setString(1, selectedEvent);
+            java.sql.ResultSet rs = capacityStmt.executeQuery();
+
+            if (rs.next()) {
+                if (rs.getInt("current_count") >= rs.getInt("max_slots")) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Registration Failed: Event is full!", "Event Full", javax.swing.JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
 
             String email = javax.swing.JOptionPane.showInputDialog(this, "Enter your Email Address to register:");
             if (email == null || email.trim().isEmpty()) return;
