@@ -154,22 +154,29 @@ public class AttendeePortal extends javax.swing.JFrame {
     }
     
     public AttendeePortal(String username) {
-        initComponents();
-        
+        initComponents(); // This MUST stay at the top to build the UI
+
+        // 1. Assign the passed username to your global variable
         this.loggedInUser = username;
-        lblWelcome.setText("Welcome to the Portal, " + loggedInUser + "!");
-        
+
+        // 2. Update the label to show the name immediately
+        lblWelcome.setText("Welcome to the Portal, " + this.loggedInUser + "!");
+
+        // 3. Initialize your data
         loadAvailableEvents("");
         loadComboBoxEvents();
         loadHostedEvents();
-        
+
+        // 4. Visual formatting for tables and scrolls
         jScrollPane2.getViewport().setBackground(tblAttendees.getBackground());
-        
+
         tblAttendees.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
         tblHostedEvents.getTableHeader().setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 14));
-        
-        scrollDiscoverEvents.getViewport().setBackground(new java.awt.Color(35, 10, 50)); 
+
+        scrollDiscoverEvents.getViewport().setBackground(new java.awt.Color(35, 10, 50));
         scrollDiscoverEvents.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
+        // Initial load of events
         loadAvailableEvents("Upcoming Events");
     }
     
@@ -297,8 +304,8 @@ public class AttendeePortal extends javax.swing.JFrame {
         scrollDiscoverEvents = new javax.swing.JScrollPane();
         btnRefreshDiscover = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
-        lblWelcome = new javax.swing.JLabel();
         cmbFilter = new javax.swing.JComboBox<>();
+        lblWelcome = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnRefreshHost = new javax.swing.JButton();
@@ -356,11 +363,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
         jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, -1, -1));
 
-        lblWelcome.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
-        lblWelcome.setForeground(new java.awt.Color(255, 255, 255));
-        lblWelcome.setText("Welcome User!");
-        jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 260, 60));
-
         cmbFilter.setBackground(new java.awt.Color(102, 0, 153));
         cmbFilter.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         cmbFilter.setForeground(new java.awt.Color(255, 255, 255));
@@ -368,6 +370,10 @@ public class AttendeePortal extends javax.swing.JFrame {
         cmbFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbFilter.addActionListener(this::cmbFilterActionPerformed);
         jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 600, 20));
+
+        lblWelcome.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
+        lblWelcome.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 550, 60));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));

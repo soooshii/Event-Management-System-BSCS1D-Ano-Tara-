@@ -45,10 +45,8 @@ public class LoginScreen extends javax.swing.JFrame {
     
     public LoginScreen() {
        initComponents();
-       lbl_welcome.setText("Welcome, " + user_name);
        
-       
-       
+  
        this.setLocationRelativeTo(null); // Keeps the window centered on your screen
         
         // Ensure the backgrounds are transparent so your Synthwave purple shows!
@@ -374,22 +372,22 @@ public class LoginScreen extends javax.swing.JFrame {
 
     } catch (java.sql.SQLException sqlErr) {
         javax.swing.JOptionPane.showMessageDialog(this, "Error checking user credentials.", "Database Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        sqlErr.printStackTrace();
         return; 
     }
 
     // 5. THE UI TRANSITION BLOCK
-    if (loginSuccessful) {
-        try {
-            System.out.println("Login Success! Attempting to build the Attendee Portal...");
-            
-            AttendeePortal nextScreen = new AttendeePortal(username); 
-            nextScreen.setVisible(true);
-            this.dispose(); 
+        if (loginSuccessful) {
+            try {
+                System.out.println("Login Success! Attempting to build the Attendee Portal...");
+
+                // You are passing 'username' into the AttendeePortal constructor
+                AttendeePortal nextScreen = new AttendeePortal(username);
+
+                nextScreen.setVisible(true); // Shows the new window
+                this.dispose(); 
             
         } catch (Exception uiErr) {
             System.out.println("CRASH DURING SCREEN BUILD!");
-            uiErr.printStackTrace(); 
             javax.swing.JOptionPane.showMessageDialog(this, "UI Error: A file or image on the Attendee Portal is missing!", "Screen Load Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     } else {
