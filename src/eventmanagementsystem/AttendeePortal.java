@@ -180,6 +180,32 @@ public class AttendeePortal extends javax.swing.JFrame {
         loadAvailableEvents("Upcoming Events");
     }
     
+    public void refreshDashboardStats() {
+        try {
+            java.sql.Connection conn = DatabaseConnection.getConnection();
+            if (conn == null) return;
+
+            // 1. Total Events
+            java.sql.ResultSet rs1 = conn.createStatement().executeQuery("SELECT COUNT(*) FROM events");
+            if(rs1.next()) lblStatEvents.setText("Total Events: " + rs1.getInt(1));
+
+            // 2. Total Registrations
+            java.sql.ResultSet rs2 = conn.createStatement().executeQuery("SELECT COUNT(*) FROM registrations");
+            if(rs2.next()) lblStatRegs.setText("Total Registrations: " + rs2.getInt(1));
+
+            // 3. Upcoming Events
+            java.sql.ResultSet rs3 = conn.createStatement().executeQuery("SELECT COUNT(*) FROM events WHERE event_date >= CURDATE()");
+            if(rs3.next()) lblStatUpcoming.setText("Upcoming Events: " + rs3.getInt(1));
+
+            // 4. Full Events
+            java.sql.ResultSet rs4 = conn.createStatement().executeQuery("SELECT COUNT(*) FROM events e WHERE e.event_date >= CURDATE() AND (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id) >= e.max_slots");
+            if(rs4.next()) lblStatFull.setText("Full Events: " + rs4.getInt(1));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }   
+    
     public void loadAvailableEvents(String filterSelection) {
        javax.swing.JPanel cardContainer = new javax.swing.JPanel();
         cardContainer.setLayout(new javax.swing.BoxLayout(cardContainer, javax.swing.BoxLayout.Y_AXIS)); 
@@ -196,12 +222,22 @@ public class AttendeePortal extends javax.swing.JFrame {
                              "CASE WHEN e.event_date < CURDATE() THEN 'CONCLUDED' ELSE 'ACTIVE' END AS event_state " +
                              "FROM events e ";
                 
-                // 2. The Dynamic Filter Logic!
+               // 2. The Dynamic Filter Logic!
                 if (filterSelection.equals("Ended Events")) {
                     sql += "WHERE e.event_date < CURDATE() ";
                 } else if (filterSelection.equals("Upcoming Events")) {
                     sql += "WHERE e.event_date >= CURDATE() ";
-                } 
+                } else if (filterSelection.equals("Open Events")) {
+                    // Open = Upcoming AND current participants are LESS than max slots
+                    sql += "WHERE e.event_date >= CURDATE() AND (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id) < e.max_slots ";
+                } else if (filterSelection.equals("Full Events")) {
+                    // Full = Upcoming AND current participants are GREATER OR EQUAL to max slots
+                    sql += "WHERE e.event_date >= CURDATE() AND (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id) >= e.max_slots ";
+                } else if (filterSelection.equals("My Registered Events")) {
+                    // Matches the logged-in user's name to the registrations table!
+                    sql += "WHERE e.event_id IN (SELECT r.event_id FROM registrations r JOIN users u ON r.first_name = u.first_name AND r.last_name = u.last_name WHERE u.username = '" + loggedInUser + "') ";
+                }
+                
                 // If the selection is "All Events", it skips the WHERE clause entirely and shows everything!
 
                 // 3. Finish the query by sorting it
@@ -241,6 +277,9 @@ public class AttendeePortal extends javax.swing.JFrame {
                 cardContainer.revalidate();
                 cardContainer.repaint();
             }
+            
+        refreshDashboardStats();
+        
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
@@ -306,11 +345,15 @@ public class AttendeePortal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         scrollDiscoverEvents = new javax.swing.JScrollPane();
+        lblStatEvents = new javax.swing.JLabel();
+        lblStatRegs = new javax.swing.JLabel();
+        lblStatUpcoming = new javax.swing.JLabel();
+        lblStatFull = new javax.swing.JLabel();
+        lblWelcome = new javax.swing.JLabel();
         btnRefreshDiscover = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         cmbFilter = new javax.swing.JComboBox<>();
-        lblWelcome = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblBG = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnRefreshHost = new javax.swing.JButton();
         btnAddEvent = new javax.swing.JButton();
@@ -322,10 +365,15 @@ public class AttendeePortal extends javax.swing.JFrame {
         txtdescrip = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        lblTotal = new javax.swing.JLabel();
+        lblPresent = new javax.swing.JLabel();
+        lblAbsent = new javax.swing.JLabel();
+        lblPending = new javax.swing.JLabel();
         txtDescription = new javax.swing.JTextField();
         cmbEvents = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblAttendees = new javax.swing.JTable();
+        btnUpdateStatus = new javax.swing.JButton();
         btnJoinEvent = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -333,7 +381,6 @@ public class AttendeePortal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Events Management System");
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1001, 657));
         setResizable(false);
 
         jTabbedPane1.setBackground(new java.awt.Color(106, 0, 102));
@@ -350,14 +397,39 @@ public class AttendeePortal extends javax.swing.JFrame {
         scrollDiscoverEvents.setBorder(null);
         scrollDiscoverEvents.setForeground(new java.awt.Color(35, 10, 50));
         scrollDiscoverEvents.setOpaque(false);
-        jPanel1.add(scrollDiscoverEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 600, 320));
+        jPanel1.add(scrollDiscoverEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 600, 420));
 
+        lblStatEvents.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblStatEvents.setForeground(new java.awt.Color(255, 255, 255));
+        lblStatEvents.setText("Total Events: 0");
+        jPanel1.add(lblStatEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 140, -1, -1));
+
+        lblStatRegs.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblStatRegs.setForeground(new java.awt.Color(255, 255, 255));
+        lblStatRegs.setText("Total Registration: 0");
+        jPanel1.add(lblStatRegs, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 110, -1, -1));
+
+        lblStatUpcoming.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblStatUpcoming.setForeground(new java.awt.Color(255, 255, 255));
+        lblStatUpcoming.setText("Upcoming: 0");
+        jPanel1.add(lblStatUpcoming, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, -1, -1));
+
+        lblStatFull.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblStatFull.setForeground(new java.awt.Color(255, 255, 255));
+        lblStatFull.setText("Full: 0");
+        jPanel1.add(lblStatFull, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 200, -1, -1));
+
+        lblWelcome.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
+        lblWelcome.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 410, 60));
+
+        btnRefreshDiscover.setBackground(new java.awt.Color(147, 71, 144));
         btnRefreshDiscover.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         btnRefreshDiscover.setForeground(new java.awt.Color(255, 255, 255));
         btnRefreshDiscover.setText("↻ Refresh");
         btnRefreshDiscover.setOpaque(true);
         btnRefreshDiscover.addActionListener(this::btnRefreshDiscoverActionPerformed);
-        jPanel1.add(btnRefreshDiscover, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, -1, -1));
+        jPanel1.add(btnRefreshDiscover, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 540, -1, -1));
 
         btnLogout.setBackground(new java.awt.Color(147, 71, 144));
         btnLogout.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -370,24 +442,21 @@ public class AttendeePortal extends javax.swing.JFrame {
         cmbFilter.setBackground(new java.awt.Color(102, 0, 153));
         cmbFilter.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         cmbFilter.setForeground(new java.awt.Color(255, 255, 255));
-        cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Upcoming Events", "Ended Events", "Full Events", "My Registered Events", " " }));
+        cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Upcoming Events", "Ended Events", "Full Events", "My Registered Events", "Open Events" }));
         cmbFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbFilter.addActionListener(this::cmbFilterActionPerformed);
-        jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 600, 20));
+        jPanel1.add(cmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 600, 20));
 
-        lblWelcome.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
-        lblWelcome.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 550, 60));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
+        lblBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
+        lblBG.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.add(lblBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
 
         jTabbedPane1.addTab("Discover Events", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(232, 212, 183));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnRefreshHost.setBackground(new java.awt.Color(147, 71, 144));
         btnRefreshHost.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         btnRefreshHost.setForeground(new java.awt.Color(255, 255, 255));
         btnRefreshHost.setText("↻ Refresh");
@@ -479,19 +548,39 @@ public class AttendeePortal extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(1001, 657));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblTotal.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(255, 255, 255));
+        lblTotal.setText("Total: 0");
+        jPanel3.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, -1, -1));
+
+        lblPresent.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblPresent.setForeground(new java.awt.Color(255, 255, 255));
+        lblPresent.setText("Present: 0");
+        jPanel3.add(lblPresent, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, -1, -1));
+
+        lblAbsent.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblAbsent.setForeground(new java.awt.Color(255, 255, 255));
+        lblAbsent.setText("Absent: 0");
+        jPanel3.add(lblAbsent, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 390, -1, -1));
+
+        lblPending.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        lblPending.setForeground(new java.awt.Color(255, 255, 255));
+        lblPending.setText("Pending: 0");
+        jPanel3.add(lblPending, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 390, -1, -1));
+
         txtDescription.setEditable(false);
         txtDescription.setBackground(new java.awt.Color(102, 0, 102));
         txtDescription.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         txtDescription.setForeground(new java.awt.Color(255, 255, 255));
         txtDescription.addActionListener(this::txtDescriptionActionPerformed);
-        jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 400, 570, 140));
+        jPanel3.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 570, 140));
 
         cmbEvents.setBackground(new java.awt.Color(102, 0, 153));
         cmbEvents.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
         cmbEvents.setForeground(new java.awt.Color(255, 255, 255));
         cmbEvents.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbEvents.addActionListener(this::cmbEventsActionPerformed);
-        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 220, -1));
+        jPanel3.add(cmbEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, 220, -1));
 
         jScrollPane2.setOpaque(false);
 
@@ -512,7 +601,7 @@ public class AttendeePortal extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Reg ID", "First Name", "Last Name", "Email", "Phone Number", "Status"
+                "Reg ID", "First Name", "Last Name", "Email", "Phone No.", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -539,19 +628,26 @@ public class AttendeePortal extends javax.swing.JFrame {
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 820, 310));
 
+        btnUpdateStatus.setBackground(new java.awt.Color(147, 71, 144));
+        btnUpdateStatus.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        btnUpdateStatus.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateStatus.setText("Update Status");
+        btnUpdateStatus.addActionListener(this::btnUpdateStatusActionPerformed);
+        jPanel3.add(btnUpdateStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 440, 160, -1));
+
         btnJoinEvent.setBackground(new java.awt.Color(147, 71, 144));
         btnJoinEvent.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnJoinEvent.setForeground(new java.awt.Color(255, 255, 255));
         btnJoinEvent.setText("Join");
         btnJoinEvent.addActionListener(this::btnJoinEventActionPerformed);
-        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 480, 80, -1));
+        jPanel3.add(btnJoinEvent, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, 60, -1));
 
         btnCancel.setBackground(new java.awt.Color(147, 71, 144));
         btnCancel.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(this::btnCancelActionPerformed);
-        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 480, -1, -1));
+        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 480, 90, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bg homescreen .png"))); // NOI18N
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 620));
@@ -564,7 +660,7 @@ public class AttendeePortal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -651,6 +747,19 @@ public class AttendeePortal extends javax.swing.JFrame {
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error loading event details: " + e.getMessage());
         }      
+        
+            int total = 0, present = 0, absent = 0, pending = 0;
+            for(int i = 0; i < tblAttendees.getRowCount(); i++) {
+                String status = tblAttendees.getValueAt(i, 3).toString();
+                total++;
+                if(status.equals("Present")) present++;
+                else if(status.equals("Absent")) absent++;
+                else if(status.equals("Pending")) pending++;
+            }
+            lblTotal.setText("Total Registrants: " + total);
+            lblPresent.setText("Present: " + present);
+            lblAbsent.setText("Absent: " + absent);
+            lblPending.setText("Pending: " + pending);
     }//GEN-LAST:event_cmbEventsActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
@@ -735,7 +844,7 @@ public class AttendeePortal extends javax.swing.JFrame {
             return; // Stops the code from reaching the INSERT statement
         }
 
-            String insertSql = "INSERT INTO registrations (event_id, first_name, last_name, email, contact_number, attendance_status) VALUES (?, ?, ?, ?, ?, 'Confirmed')";
+            String insertSql = "INSERT INTO registrations (event_id, first_name, last_name, email, contact_number, attendance_status) VALUES (?, ?, ?, ?, ?, 'Pending')";
             java.sql.PreparedStatement insertStmt = conn.prepareStatement(insertSql);
             insertStmt.setInt(1, eventId);
             insertStmt.setString(2, firstName);
@@ -972,6 +1081,38 @@ public class AttendeePortal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescriptionActionPerformed
 
+    private void btnUpdateStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStatusActionPerformed
+        int selectedRow = tblAttendees.getSelectedRow();
+          if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Select an attendee from the table first!");
+            return;
+        }
+        
+        // Grab the hidden Registration ID (Column 0)
+        String regId = tblAttendees.getValueAt(selectedRow, 0).toString();
+        
+        // Give the Admin a popup choice
+        String[] options = {"Present", "Absent", "Pending"};
+        int choice = javax.swing.JOptionPane.showOptionDialog(this, "Mark attendee as:", "Update Attendance",
+            javax.swing.JOptionPane.DEFAULT_OPTION, javax.swing.JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+        if (choice != -1) {
+            String newStatus = options[choice];
+            try {
+                java.sql.Connection conn = DatabaseConnection.getConnection();
+                java.sql.PreparedStatement pst = conn.prepareStatement("UPDATE registrations SET attendance_status = ? WHERE registration_id = ?");
+                pst.setString(1, newStatus);
+                pst.setString(2, regId);
+                pst.executeUpdate();
+                
+                // Refresh the table and summary instantly!
+                cmbEventsActionPerformed(null); 
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error updating status: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnUpdateStatusActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1005,9 +1146,9 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JButton btnRefreshDiscover;
     private javax.swing.JButton btnRefreshHost;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnUpdateStatus;
     private javax.swing.JComboBox<String> cmbEvents;
     private javax.swing.JComboBox<String> cmbFilter;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -1016,6 +1157,15 @@ public class AttendeePortal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblAbsent;
+    private javax.swing.JLabel lblBG;
+    private javax.swing.JLabel lblPending;
+    private javax.swing.JLabel lblPresent;
+    private javax.swing.JLabel lblStatEvents;
+    private javax.swing.JLabel lblStatFull;
+    private javax.swing.JLabel lblStatRegs;
+    private javax.swing.JLabel lblStatUpcoming;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblWelcome;
     private javax.swing.JScrollPane scrollDiscoverEvents;
     private javax.swing.JTable tblAttendees;

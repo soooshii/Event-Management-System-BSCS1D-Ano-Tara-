@@ -32,7 +32,7 @@ public class SplashScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
-        btnStart = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         lblSplashGIF = new javax.swing.JLabel();
         lblSplashBG = new javax.swing.JLabel();
 
@@ -43,24 +43,17 @@ public class SplashScreen extends javax.swing.JFrame {
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnStart.setBackground(java.awt.SystemColor.activeCaptionText);
-        btnStart.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
-        btnStart.setForeground(new java.awt.Color(255, 255, 255));
-        btnStart.setText("[ Press Start ]");
-        btnStart.setBorderPainted(false);
-        btnStart.setContentAreaFilled(false);
-        btnStart.setOpaque(true);
-        btnStart.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rsz_bookbutton-removebg-preview.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnStartMouseClicked(evt);
+                jLabel1MouseClicked(evt);
             }
         });
-        btnStart.addActionListener(this::btnStartActionPerformed);
-        jPanel3.add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, -1, 70));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, -1, -1));
 
         lblSplashGIF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashGIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/yuumi.gif"))); // NOI18N
-        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 310, 240));
+        jPanel3.add(lblSplashGIF, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 310, 240));
 
         lblSplashBG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSplashBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/b3880201-magical-library-with-floating-books-in-whimsical-pixel-art-thumbnail.jpg"))); // NOI18N
@@ -71,17 +64,12 @@ public class SplashScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-        
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         System.out.println("This button was clicked!");
         LoginScreen login = new LoginScreen();
         new LoginScreen().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnStartActionPerformed
-
-    private void btnStartMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartMouseClicked
-       
-    }//GEN-LAST:event_btnStartMouseClicked
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -109,7 +97,7 @@ public class SplashScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnStart;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblSplashBG;
     private javax.swing.JLabel lblSplashGIF;

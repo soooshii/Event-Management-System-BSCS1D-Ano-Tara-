@@ -110,6 +110,7 @@ public class LoginScreen extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         pnlLogin = new javax.swing.JPanel();
         lblWelcome = new javax.swing.JLabel();
+        lblStar = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
         chkPassword = new javax.swing.JCheckBox();
@@ -118,9 +119,11 @@ public class LoginScreen extends javax.swing.JFrame {
         lblPassword = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
-        lblStar = new javax.swing.JLabel();
         lblloginbg1 = new javax.swing.JLabel();
         pnlSignup = new javax.swing.JPanel();
+        lblTitle2 = new javax.swing.JLabel();
+        lblStar2 = new javax.swing.JLabel();
+        lblWelcome2 = new javax.swing.JLabel();
         btnCreateAccount = new javax.swing.JToggleButton();
         btnBackToLogin = new javax.swing.JButton();
         lblFirstName = new javax.swing.JLabel();
@@ -132,9 +135,6 @@ public class LoginScreen extends javax.swing.JFrame {
         txtUsername1 = new javax.swing.JTextField();
         chkPassword1 = new javax.swing.JCheckBox();
         lblUsername1 = new javax.swing.JLabel();
-        lblWelcome1 = new javax.swing.JLabel();
-        lblTitle1 = new javax.swing.JLabel();
-        lblStar1 = new javax.swing.JLabel();
         lblsignupbg2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -154,22 +154,26 @@ public class LoginScreen extends javax.swing.JFrame {
         pnlLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblWelcome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Welcome.png"))); // NOI18N
-        pnlLogin.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, 130));
+        pnlLogin.add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, 90));
 
-        lblTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rsz_logicore.png"))); // NOI18N
-        pnlLogin.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 770, 240));
+        lblStar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Star-ezgif.com-resize.gif"))); // NOI18N
+        pnlLogin.add(lblStar, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 0, 360, 190));
+
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logicore-ezgif.com-resize.gif"))); // NOI18N
+        pnlLogin.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 770, 280));
 
         lblUsername.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setText("Username");
-        pnlLogin.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, -1, -1));
+        pnlLogin.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 360, -1, -1));
 
         chkPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         chkPassword.setForeground(new java.awt.Color(255, 255, 255));
         chkPassword.setText("Show Password");
         chkPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.black));
         chkPassword.addActionListener(this::chkPasswordActionPerformed);
-        pnlLogin.add(chkPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 490, -1, 32));
+        pnlLogin.add(chkPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 490, -1, 32));
 
         btnSignUp.setBackground(new java.awt.Color(204, 204, 255));
         btnSignUp.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -184,16 +188,16 @@ public class LoginScreen extends javax.swing.JFrame {
         btnSignUp.setOpaque(true);
         btnSignUp.setPreferredSize(new java.awt.Dimension(72, 33));
         btnSignUp.addActionListener(this::btnSignUpActionPerformed);
-        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, 140, -1));
+        pnlLogin.add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 540, 140, -1));
 
         txtUsername.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
-        pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 380, 308, 30));
+        pnlLogin.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 308, 30));
 
         lblPassword.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Password ");
-        pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
+        pnlLogin.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 430, -1, -1));
 
         txtPassword.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
@@ -202,7 +206,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 txtPasswordKeyPressed(evt);
             }
         });
-        pnlLogin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 450, 308, 30));
+        pnlLogin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 308, 30));
 
         btnLogin.setBackground(new java.awt.Color(204, 204, 255));
         btnLogin.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -214,14 +218,11 @@ public class LoginScreen extends javax.swing.JFrame {
         btnLogin.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnLogin.setOpaque(true);
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 540, 140, 33));
-
-        lblStar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Star.gif"))); // NOI18N
-        pnlLogin.add(lblStar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 780, 760));
+        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 540, 140, 33));
 
         lblloginbg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblloginbg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/login and signin.png"))); // NOI18N
-        pnlLogin.add(lblloginbg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -10, 1040, 680));
+        pnlLogin.add(lblloginbg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, -10, 1090, 680));
 
         jPanel2.add(pnlLogin, "LOGIN");
 
@@ -231,6 +232,16 @@ public class LoginScreen extends javax.swing.JFrame {
         pnlSignup.setMinimumSize(new java.awt.Dimension(1001, 657));
         pnlSignup.setPreferredSize(new java.awt.Dimension(1001, 657));
         pnlSignup.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTitle2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logicore-ezgif.com-resize.gif"))); // NOI18N
+        pnlSignup.add(lblTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 770, 280));
+
+        lblStar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Star-ezgif.com-resize.gif"))); // NOI18N
+        pnlSignup.add(lblStar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 0, 360, 190));
+
+        lblWelcome2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Welcome.png"))); // NOI18N
+        pnlSignup.add(lblWelcome2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, 90));
 
         btnCreateAccount.setBackground(new java.awt.Color(204, 204, 255));
         btnCreateAccount.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
@@ -298,15 +309,6 @@ public class LoginScreen extends javax.swing.JFrame {
         lblUsername1.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername1.setText("Username");
         pnlSignup.add(lblUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, 100, -1));
-
-        lblWelcome1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Welcome.png"))); // NOI18N
-        pnlSignup.add(lblWelcome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, 130));
-
-        lblTitle1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rsz_logicore.png"))); // NOI18N
-        pnlSignup.add(lblTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 770, 240));
-
-        lblStar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Star.gif"))); // NOI18N
-        pnlSignup.add(lblStar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 780, 760));
 
         lblsignupbg2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/login and signin.png"))); // NOI18N
         lblsignupbg2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -489,7 +491,7 @@ public class LoginScreen extends javax.swing.JFrame {
         initComponents();
         
         // Feed it the exact variable name of your JLabel, and the exact path to your image!
-        setResponsiveImage(lblTitle, "/Images/Logicore.png");
+        
         
         // You can reuse this for as many images as you want!
         // setResponsiveImage(lblLogo, "/Images/my_logo.png");
@@ -543,13 +545,13 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblPassword1;
     private javax.swing.JLabel lblStar;
-    private javax.swing.JLabel lblStar1;
+    private javax.swing.JLabel lblStar2;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JLabel lblTitle1;
+    private javax.swing.JLabel lblTitle2;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JLabel lblUsername1;
     private javax.swing.JLabel lblWelcome;
-    private javax.swing.JLabel lblWelcome1;
+    private javax.swing.JLabel lblWelcome2;
     private javax.swing.JLabel lblloginbg1;
     private javax.swing.JLabel lblsignupbg2;
     private javax.swing.JPanel pnlLogin;
