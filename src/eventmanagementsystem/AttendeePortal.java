@@ -152,8 +152,15 @@ public class AttendeePortal extends javax.swing.JFrame {
             }
         }
     }
+     
     
     public AttendeePortal(String username) {
+        
+       javax.swing.UIManager.put("control", new java.awt.Color(35, 10, 50)); 
+        javax.swing.UIManager.put("nimbusBase", new java.awt.Color(147, 71, 144)); 
+        javax.swing.UIManager.put("OptionPane.messageForeground", new java.awt.Color(255, 255, 255));
+        javax.swing.UIManager.put("Label.foreground", new java.awt.Color(255, 255, 255));
+        
         initComponents(); // This MUST stay at the top to build the UI
 
         // 1. Assign the passed username to your global variable
