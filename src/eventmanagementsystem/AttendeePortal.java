@@ -891,6 +891,15 @@ public class AttendeePortal extends javax.swing.JFrame {
                     return; // STOP the update here
                 }
                 
+                int newMaxSlots = Integer.parseInt(txtSlots.getText());
+                if (newMaxSlots < registrantCount) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "Update Denied: You cannot set Max Slots to " + newMaxSlots + " because " + registrantCount + " users are already registered!",
+                            "Capacity Conflict",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return; // STOP the update here
+                }
+                
                 String updateSql = "UPDATE events SET event_name = ?, event_date = ?, location = ?, max_slots = ?, description = ? WHERE event_id = ?";
                 java.sql.PreparedStatement updateStmt = conn.prepareStatement(updateSql);
 
